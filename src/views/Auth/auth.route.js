@@ -16,5 +16,13 @@ export default {
         title: 'sign_up',
       },
     },
+    {
+      path: 'forget-password',
+      name: 'forget-password',
+      component: () => import('./ForgetPasswordPage.vue'),
+      meta: {
+        title: 'forget-password',
+      },
+    },
   ],
 }

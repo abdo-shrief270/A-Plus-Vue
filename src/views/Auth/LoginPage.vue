@@ -81,7 +81,7 @@
             <label for="remember" class="text-surface-900 dark:text-surface-50"> تذكرني </label>
           </div>
           <router-link
-            to="/forgot-password"
+            to="/forget-password"
             class="text-primary-500 font-medium hover:text-primary-600 transition-colors"
             aria-label="استعادة كلمة المرور"
           >

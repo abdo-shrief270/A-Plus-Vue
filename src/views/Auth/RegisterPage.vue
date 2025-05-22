@@ -135,7 +135,12 @@
               :error="v$.user_name.$error"
               @blur="v$.user_name.$touch"
               class="transition-all duration-300 focus:ring-2 focus:ring-primary-600 rounded-lg"
+              @input="checkUsernameAvailability()"
             />
+            <div v-if="isUsernameAvailable !== null" class="text-sm mt-1">
+              <span v-if="isUsernameAvailable" class="text-green-600">اسم المستخدم متاح</span>
+              <span v-else class="text-red-600">اسم المستخدم غير متاح</span>
+            </div>
           </div>
           <div class="flex flex-col gap-2 relative">
             <a-input
@@ -256,18 +261,21 @@
 
 <script setup>
 import useImages from '@/helpers/images.helper'
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email, sameAs } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/Auth/auth.store'
 import { useRoute, useRouter } from 'vue-router'
 import { optionsGender } from '@/enums/genders.enums'
+import { debounce } from 'vue-debounce'
 
-// Variables
 const { register, uiFlags } = useAuthStore()
+const $api = inject('$api')
+const checkUsername = new $api('auth/username/check')
 const router = useRouter()
 const route = useRoute()
 const loading = ref(false)
+const isUsernameAvailable = ref(null) // New state for username availability
 const images = useImages()
 const currentStep = ref(1)
 const userType = ref(route.query.type || 'student')
@@ -285,16 +293,12 @@ const createObj = ref({
   gender: '',
 })
 
-// Total steps based on user type
 const totalSteps = computed(() => (userType.value === 'student' ? 3 : 2))
-
-// Exam options for select
 const examOptions = [
   { value: '1', name: 'تحصيلي' },
   { value: '2', name: 'قدرات' },
 ]
 
-// Update query parameter and reset to Step 1 when userType changes
 const setUserType = (type) => {
   userType.value = type
   createObj.value.type = type
@@ -306,7 +310,6 @@ const setUserType = (type) => {
   router.push({ query: { type } })
 }
 
-// Validation rules
 const rules = computed(() => {
   const baseRules = {
     name: { required },
@@ -331,20 +334,19 @@ const rules = computed(() => {
 
 const v$ = useVuelidate(rules, createObj)
 
-// Computed to disable Next button if current step is invalid
 const isNextDisabled = computed(() => {
   if (currentStep.value === 1) {
     return !userType.value
   }
   if (currentStep.value === 2) {
-    // Check errors without touching all fields
     return (
       v$.value.name.$invalid ||
       v$.value.user_name.$invalid ||
       v$.value.email.$invalid ||
       v$.value.phone.$invalid ||
       v$.value.password.$invalid ||
-      v$.value.password_confirmation.$invalid
+      v$.value.password_confirmation.$invalid ||
+      isUsernameAvailable.value == false
     )
   }
   if (currentStep.value === 3 && userType.value === 'student') {
@@ -353,14 +355,12 @@ const isNextDisabled = computed(() => {
   return false
 })
 
-// Navigation functions
 const nextStep = () => {
   if (currentStep.value === 1) {
     if (!isNextDisabled.value) {
       currentStep.value++
     }
   } else if (currentStep.value === 2) {
-    // Touch only the fields in Step 2
     v$.value.name.$touch()
     v$.value.user_name.$touch()
     v$.value.email.$touch()
@@ -371,7 +371,6 @@ const nextStep = () => {
       currentStep.value++
     }
   } else if (currentStep.value === 3 && userType.value === 'student') {
-    // Touch only the fields in Step 3
     v$.value.exam_id.$touch()
     v$.value.exam_date.$touch()
     if (!isNextDisabled.value) {
@@ -386,7 +385,6 @@ const previousStep = () => {
   }
 }
 
-// Submit function
 const submit = async () => {
   v$.value.$touch()
   if (v$.value.$error) return
@@ -403,10 +401,28 @@ const submit = async () => {
   }
 }
 
-// Handle form submission to prevent default
 const handleSubmit = (e) => {
   e.preventDefault()
 }
+
+const checkUsernameAvailability = debounce(async () => {
+  if (!createObj.value.user_name) {
+    isUsernameAvailable.value = null
+    return
+  }
+  try {
+    loading.value = true
+    const { data } = await checkUsername.create({ user_name: createObj.value.user_name })
+    console.log(data)
+    isUsernameAvailable.value = data.data.available // Adjust based on your API response
+    console.log('Username check response:', data)
+  } catch (error) {
+    console.error('Username check failed:', error)
+    isUsernameAvailable.value = false
+  } finally {
+    loading.value = false
+  }
+}, 400)
 </script>
 
 <style scoped></style>

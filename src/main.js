@@ -11,12 +11,14 @@ import CustomPreset from './config/primevue-preset'
 import 'vue-tel-input/vue-tel-input.css'
 import VueTelInput from 'vue-tel-input'
 import VueCookies from 'vue-cookies'
+import ApiClient from '@/helpers/api.helper'
 
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(i18n)
 app.use(router)
+app.provide('$api', ApiClient)
 app.use(PrimeVue, {
   theme: {
     preset: CustomPreset,
