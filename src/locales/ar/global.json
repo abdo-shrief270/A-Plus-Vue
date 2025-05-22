@@ -1,0 +1,44 @@
+{
+  "global": {
+    "actions": {
+      "cancel": "إلغاء",
+      "save": "حفظ",
+      "edit": "ـعديل",
+      "remove": "حذف"
+    },
+    "table": {
+      "show": "عرض",
+      "to": "إلى",
+      "from": "من",
+      "data": "السجلات",
+      "search": "بحث..."
+    },
+    "status": {
+      "error": "خطأ",
+      "success": "نجاح",
+      "Waring": "تحذير",
+      "info": "معلومات"
+    },
+    "inputs": {
+      "date": "التاريخ",
+      "time": "الوقت"
+    },
+    "pages": {
+      "conversations": "المحادثات",
+      "contacts": "جهات الاتصال",
+      "bulk-sms": "الرسائل الجماعية",
+      "create-bulk-sms": "إنشاء رسالة جماعية",
+      "campaigns": "الحملات",
+      "create-campaigns": "إنشاء حملة",
+      "reports": "التقارير",
+      "settings": "الإعدادات",
+      "organization": "المؤسسة",
+      "profile": "الملف الشخصي",
+      "users": "المستخدمون",
+      "channels": "القنوات",
+      "tags": "الوسوم",
+      "otp-settings": "إعدادات رمز التحقق",
+      "support": "الدعم"
+    }
+  }
+}

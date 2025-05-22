@@ -1,0 +1,37 @@
+{
+  "campaigns": {
+    "table": {
+      "campaign_name": "Campaign Name",
+      "message": "Message",
+      "sender": "Sender",
+      "audience": "Audience",
+      "contacts_count": "Contacts Count",
+      "date": "Date",
+      "status": "Status",
+      "channel": "Channel",
+      "actions": "Actions"
+    },
+    "status": {
+      "placeholder": "Campaign Status",
+      "all": "All",
+      "scheduled": "Scheduled",
+      "in_progress": "In Progress",
+      "completed": "Completed",
+      "failed": "Failed",
+      "draft": "Draft"
+    },
+    "create": {
+      "title": "One Off Campaign",
+      "description": "A One-Off Campaign is a one-time campaign with a specific start and end date, ideal for special promotions or events.",
+      "header_1": "Campaign Settings",
+      "header_2": "Message and Audience",
+      "form": {
+        "title": "Title",
+        "inbox": "Inbox",
+        "save_as_draft": "Save as Draft",
+        "next": "Next",
+        "create": "Create"
+      }
+    }
+  }
+}

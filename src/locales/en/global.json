@@ -1,0 +1,44 @@
+{
+  "global": {
+    "actions": {
+      "cancel": "Cancel",
+      "save": "Save",
+      "edit": "Edit",
+      "remove": "Remove"
+    },
+    "status": {
+      "error": "error",
+      "success": "Success",
+      "Waring": "Waring",
+      "info": "information"
+    },
+    "table": {
+      "show": "Show",
+      "to": "To",
+      "from": "From",
+      "data": "Records",
+      "search": "Search..."
+    },
+    "inputs": {
+      "date": "Date",
+      "time": "Time"
+    },
+    "pages": {
+      "conversations": "Conversations",
+      "contacts": "Contacts",
+      "bulk-sms": "Bulk SMS",
+      "create-bulk-sms": "Create Bulk SMS",
+      "campaigns": "Campaigns",
+      "create-campaigns": "Create Campaigns",
+      "reports": "Reports",
+      "settings": "Settings",
+      "organization": "Organization",
+      "profile": "Profile",
+      "users": "Users",
+      "channels": "Channels",
+      "tags": "Tags",
+      "otp-settings": "OTP Settings",
+      "support": "Support"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "conversations": {
+        "menu": {
+            "all": "الكل",
+            "mine": "خاصتي",
+            "unassigned": "غير معين",
+            "p1Inbox": "صندوق بريد P1",
+            "whatsapp": "واتساب",
+            "p2Inbox": "صندوق بريد P2",
+            "new_inbox": "صندوق بريد جديد",
+            "sales_team": "فريق المبيعات",
+            "support_team": "فريق الدعم",
+            "new_team": "فريق جديد",
+            "custom_inbox": "صندوق بريد مخصص",
+            "teams": "Teams",
+            "inboxes": "صناديق البريد"
+        }
+    }
+}

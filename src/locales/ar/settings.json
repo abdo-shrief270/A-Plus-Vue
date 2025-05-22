@@ -1,0 +1,90 @@
+{
+  "settings": {
+    "menu": {
+      "organization_settings": "إعدادات المؤسسة",
+      "organization_info": "معلومات المؤسسة",
+      "personal_settings": "الإعدادات الشخصية",
+      "profile": "الملف الشخصي",
+      "user_role_settings": "إعدادات دور المستخدم",
+      "user_settings": "المستخدمين",
+      "team_settings": "إعدادات الفريق",
+      "apps": "التطبيقات",
+      "channels": "القنوات",
+      "integrations": "التكاملات",
+      "inbox_settings": "إعدادات البريد الوارد",
+      "inboxes": "صناديق البريد",
+      "tags": " العلامات",
+      "billing": "الفوترة",
+      "billing_usage": "الفوترة والاستخدام",
+      "whatsapp_fees": "رسوم واتساب",
+      "templates": "القوالب",
+      "sms_templates": "قوالب الرسائل النصية",
+      "OTP-Settings": "إعدادات OTP"
+    },
+    "organization_info": {
+      "header": "معلومات المؤسسة",
+      "description": "إدارة معلومات وإعدادات المؤسسة الخاصة بك",
+      "name": "الاسم",
+      "name_placeholder": "أضف اسم المؤسسة",
+      "phone": "رقم الهاتف",
+      "phone_placeholder": "أضف رقم هاتف المؤسسة",
+      "website": "الموقع الإلكتروني",
+      "website_placeholder": "أضف موقع المؤسسة الإلكتروني",
+      "save_changes": "حفظ التغييرات"
+    },
+    "users": {
+      "add_user": "إضافة مستخدم",
+      "email_optional": "البريد الإلكتروني (اختياري)",
+      "access_level": "مستوى الوصول",
+      "select_access_level": "اختر مستوى الوصول",
+      "role_description": "يمكن للمديرين الوصول إلى جميع وحدات مساحة العمل، بما في ذلك الإعدادات، ولكن لا يمكنهم دعوة/حذف مديرين آخرين أو حذف القنوات.",
+      "owner": "المالك",
+      "manager": "مدير",
+
+      "agent": "وكيل",
+      "table": {
+        "name": "الاسم",
+        "phone": "رقم الهاتف",
+        "email": "البريد الإلكتروني",
+        "company_name": "اسم الشركة",
+        "role": "الدور",
+        "actions": "الإجراءات",
+        "delete": "حذف",
+        "edit": "تعديل"
+      }
+    },
+    "teams": {
+      "add_team": "إضافة فريق",
+      "team": "الفريق",
+      "created_at": "تاريخ الإنشاء",
+      "manage": "إدارة",
+      "members": "أعضاء",
+      "team_name": "اسم الفريق",
+      "select_members": "اختر الأعضاء",
+      "access_info": "يمكن للمديرين الوصول إلى جميع وحدات العمل، بما في ذلك الإعدادات، ولكن لا يمكنهم دعوة/حذف المديرين الآخرين أو حذف القنوات."
+    },
+    "profile": {
+      "header": "الملف الشخصي",
+      "description": "إدارة معلومات الملف الشخصي الخاصة بك",
+      "email": "البريد الإلكتروني",
+      "email_verified": "تم التحقق من البريد الإلكتروني",
+      "name": "الاسم",
+      "name_placeholder": "أدخل الاسم الكامل",
+      "phone": "رقم الهاتف",
+      "phone_placeholder": "أدخل رقم الهاتف",
+      "language": "اللغة",
+      "language_placeholder": "اختر اللغة",
+      "change_password": "تغيير كلمة المرور",
+      "save_changes": "حفظ التغييرات",
+      "avatar": {
+        "upload": "تحميل صورة",
+        "remove": "إزالة الصورة"
+      }
+    },
+    "global": {
+      "actions": {
+        "save": "حفظ"
+      }
+    }
+  }
+}

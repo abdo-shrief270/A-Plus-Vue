@@ -1,0 +1,48 @@
+{
+  "contacts": {
+    "create": {
+      "new_contact": "جهة اتصال جديدة",
+      "name_label": "الاسم (اختياري)",
+      "name_placeholder": "أدخل اسمك",
+      "email_label": "البريد الإلكتروني (اختياري)",
+      "email_placeholder": "أدخل بريدك الإلكتروني",
+      "labels": "التصنيفات"
+    },
+    "table": {
+      "name": "الاسم",
+      "phone": "رقم الهاتف",
+      "email": "عنوان البريد الإلكتروني",
+      "tags": "التصنيفات",
+      "country": "الدولة",
+      "created_date": "تاريخ الإنشاء",
+      "last_activity": "آخر نشاط",
+      "details": "عرض التفاصيل",
+      "search_placeholder": "ابحث عن الاسم أو البريد الإلكتروني أو رقم الهاتف"
+    },
+    "menu": {
+      "all": "الكل",
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "blocked": "محظور",
+      "contacts_wiith_tag": "جهات الاتصال ذات الوسم"
+    },
+    "import": {
+      "title": "استيراد جهات الاتصال",
+      "download_sample": "تحميل نموذج xlsx",
+      "description": "قم باستيراد جهات الاتصال من خلال ملف xlsx.",
+      "upload_file": "اسحب الملف وأفلته أو انقر للرفع",
+      "upload_limit": "الحد الأقصى 20 ميغابايت لكل ملف",
+      "import_button": "استيراد"
+    },
+    "actions": {
+      "export": "تصدير",
+      "add_contact": "إضافة جهة اتصال",
+      "create_contact": "إنشاء جهة اتصال",
+      "upload_file": "رفع ملف xlsx"
+    },
+    "filters": {
+      "apply": "تطبيق",
+      "reset": "إعادة تعيين"
+    }
+  }
+}

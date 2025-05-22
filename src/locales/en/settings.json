@@ -1,0 +1,90 @@
+{
+  "settings": {
+    "menu": {
+      "organization_settings": "Organization Settings",
+      "organization_info": "Organization Info",
+      "personal_settings": "Personal Settings",
+      "profile": "Profile",
+      "user_role_settings": "User Role Settings",
+      "user_settings": "Users",
+      "team_settings": "Team Settings",
+      "apps": "Apps",
+      "channels": "Channels",
+      "integrations": "Integrations",
+      "inbox_settings": "Inbox Settings",
+      "inboxes": "Inboxes",
+      "tags": "Tags",
+      "billing": "Billing",
+      "billing_usage": "Billing & Usage",
+      "whatsapp_fees": "WhatsApp Fees",
+      "templates": "Templates",
+      "sms_templates": "SMS Templates",
+      "OTP-Settings": "OTP Settings"
+    },
+    "organization_info": {
+      "header": "Organization info",
+      "description": "Manage your organization information and settings",
+      "name": "Name",
+      "name_placeholder": "Add organization name",
+      "phone": "Phone",
+      "phone_placeholder": "Add organization phone number",
+      "website": "Website",
+      "website_placeholder": "Add organization website",
+      "save_changes": "Save Changes"
+    },
+    "users": {
+      "add_user": "Add User",
+      "email_optional": "Email (optional)",
+      "access_level": "Access Level",
+      "select_access_level": "Select Access Level",
+      "role_description": "Managers can access all workspace modules, including Settings, but can't invite/delete other managers or delete channels.",
+      "owner": "Owner",
+      "manager": "Manager",
+      "agent": "Agent",
+      "table": {
+        "name": "Name",
+        "phone": "Phone Number",
+        "email": "Email",
+        "company_name": "Company Name",
+        "role": "Role",
+        "actions": "Actions",
+        "delete": "Delete",
+        "edit": "Edit"
+      }
+    },
+    "teams": {
+      "add_team": "Add Team",
+      "team": "Team",
+      "created_at": "Created",
+      "manage": "Manage",
+      "delete": "Delete",
+      "members": "members",
+      "team_name": "Team Name",
+      "select_members": "Select Members",
+      "access_info": "Managers can access all workspace modules, including Settings, but can't invite/delete other managers or delete channels."
+    },
+    "profile": {
+      "header": "Profile",
+      "description": "Manage your profile information",
+      "email": "Email",
+      "email_verified": "Email verified",
+      "name": "Name",
+      "name_placeholder": "Enter your full name",
+      "phone": "Phone",
+      "phone_placeholder": "Enter your phone number",
+      "language": "Language",
+      "language_placeholder": "Select language",
+      "change_password": "Change Password",
+      "save_changes": "Save Changes",
+      "avatar": {
+        "upload": "Upload Image",
+        "remove": "Remove Image"
+      }
+    },
+    "global": {
+      "actions": {
+        "save": "Save"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "tags": {
+    "create": {
+      "new_label": "New tag",
+      "label_name": "tag Name",
+      "name_placeholder": "Enter tag name",
+      "color": "Color",
+      "hex_prefix": "#",
+      "description": "Create a tag to group related contacts together.",
+      "details": "tags help you organize your contacts and make it easier to find specific groups later."
+    }
+  }
+}

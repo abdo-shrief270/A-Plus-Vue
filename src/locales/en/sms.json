@@ -1,0 +1,47 @@
+{
+  "sms": {
+    "breadcrumb": {
+      "bulk_sms": "Bulk SMS",
+      "send": "Send"
+    },
+    "table": {
+      "id": "ID",
+      "message": "Message",
+      "channel": "Channel",
+      "body": "Body",
+      "receiver_number": "Receiver Number",
+      "receiver_name": "Receiver Name",
+      "status": "Status",
+      "balance_back": "Balance Back",
+      "date": "Date",
+      "contact_id": "Contact ID",
+      "cost": "Cost",
+      "network": "Network",
+      "sender": "Sender",
+      "resend": "Resend",
+      "sent": "Sent",
+      "unsent": "Unsent",
+      "balance_issue": "Balance Issue",
+      "actions": "Actions"
+    },
+    "create": {
+      "title": "Bulk SMS",
+      "description": "Bulk SMS allows you to send a single message to multiple contacts at once.",
+      "select_audience": "Select Audience",
+      "upload_csv": "Upload CSV file",
+      "message": "Message",
+      "type_message": "Type a message",
+      "language": "English",
+      "total_messages_sent": "Total Messages Sent",
+      "chars_count": "Chars",
+      "messages_count": "Messages",
+      "cancel": "Cancel",
+      "send": "Send",
+      "online": "Online",
+      "typeMessage": "Type a message...",
+      "smsMode": "SMS",
+      "users_count": "Number of selected users",
+      "total_users": "Users"
+    }
+  }
+}

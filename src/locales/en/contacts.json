@@ -1,0 +1,48 @@
+{
+  "contacts": {
+    "create": {
+      "new_contact": "New Contact",
+      "name_label": "Name (optional)",
+      "name_placeholder": "Enter your name",
+      "email_label": "Email (optional)",
+      "email_placeholder": "Enter your email",
+      "labels": "tags"
+    },
+    "table": {
+      "name": "Name",
+      "phone": "Phone Number",
+      "email": "Email Address",
+      "tags": "Tags",
+      "country": "Country",
+      "created_date": "Created Date",
+      "last_activity": "Last Activity",
+      "details": "View Details",
+      "search_placeholder": "Search by name, email, or phone"
+    },
+    "menu": {
+      "all": "All",
+      "active": "Active",
+      "inactive": "Inactive",
+      "blocked": "Blocked",
+      "contacts_with_tag": "Contacts with Tag"
+    },
+    "import": {
+      "title": "Import Contacts",
+      "download_sample": "Download a sample xlsx",
+      "description": "Import contacts through a xlsx file.",
+      "upload_file": "Drag and drop or Click to upload",
+      "upload_limit": "20MB max per file",
+      "import_button": "Import"
+    },
+    "actions": {
+      "export": "Export",
+      "add_contact": "Add Contact",
+      "create_contact": "Create Contact",
+      "upload_file": "Upload xlsx File"
+    },
+    "filters": {
+      "apply": "Apply",
+      "reset": "Reset"
+    }
+  }
+}

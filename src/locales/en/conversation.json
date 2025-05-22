@@ -1,0 +1,19 @@
+{
+    "conversations": {
+        "menu": {
+            "all": "All",
+            "mine": "Mine",
+            "unassigned": "Unassigned",
+            "p1Inbox": "P1 Inbox",
+            "whatsapp": "WhatsApp",
+            "p2Inbox": "P2 Inbox",
+            "new_inbox": "New Inbox",
+            "sales_team": "Sales Team",
+            "support_team": "Support Team",
+            "new_team": "New Team",
+            "custom_inbox": "Inbox",
+            "teams": "Teams",
+            "inboxes": "Inboxes"
+        }
+    }
+}

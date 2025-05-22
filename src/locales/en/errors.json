@@ -1,0 +1,7 @@
+{
+  "errors": {
+    "required": "This field is required",
+    "email": "The email address is invalid",
+    "invalid_phone": "The phone number is invalid"
+  }
+}

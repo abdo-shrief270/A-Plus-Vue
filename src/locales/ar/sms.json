@@ -1,0 +1,47 @@
+{
+  "sms": {
+    "breadcrumb": {
+      "bulk_sms": "رسائل جماعية",
+      "send": "إرسال"
+    },
+    "table": {
+      "id": "المعرف",
+      "message": "الرسالة",
+      "channel": "القناة",
+      "body": "المحتوى",
+      "receiver_number": "رقم المستلم",
+      "receiver_name": "اسم المستلم",
+      "status": "الحالة",
+      "balance_back": "الرصيد المسترجع",
+      "date": "التاريخ",
+      "contact_id": "معرف جهة الاتصال",
+      "cost": "التكلفة",
+      "network": "الشبكة",
+      "actions": "الإجراءات",
+      "sender": "المرسل",
+      "resend": "إعاة الارسال",
+      "sent": "تم الارسال",
+      "unsent": "لم يتم الارسال",
+      "balance_issue": "مشكلة في الرصيد"
+    },
+    "create": {
+      "title": "الرسائل الجماعية",
+      "description": "تتيح لك الرسائل الجماعية إرسال رسالة واحدة إلى عدة جهات اتصال في وقت واحد.",
+      "select_audience": "حدد الجمهور",
+      "upload_csv": "تحميل ملف CSV",
+      "message": "الرسالة",
+      "type_message": "اكتب رسالة",
+      "language": "الإنجليزية",
+      "total_messages_sent": "إجمالي الرسائل المرسلة",
+      "chars_count": "أحرف",
+      "messages_count": "رسائل",
+      "cancel": "إلغاء",
+      "send": "إرسال",
+      "online": "متصل",
+      "typeMessage": "اكتب رسالة...",
+      "smsMode": "رسالة نصية",
+      "users_count": "عدد المستخدم المحدد",
+      "total_users": "المستخدمين"
+    }
+  }
+}
