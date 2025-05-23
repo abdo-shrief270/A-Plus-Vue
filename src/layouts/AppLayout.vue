@@ -1,9 +1,21 @@
 <template>
   <div class="h-max bg-gradient-to-b from-white/90 to-primary-50 backdrop-blur-2xl">
-    <e-nav-bar />
-    <RouterView />
-    <e-footer />
+    <div v-if="user !== 'parent'" class="h-dvh">
+      <e-nav-bar />
+      <RouterView />
+      <e-footer />
+    </div>
+    <div v-else class="h-dvh">
+      <ParentView />
+    </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from 'vue'
+import ParentView from './ParentView.vue'
+const user = ref(null)
+if (window.$cookies.isKey('aplus-userType')) {
+  user.value = window.$cookies.get('aplus-userType')
+}
+</script>

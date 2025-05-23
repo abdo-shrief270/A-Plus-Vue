@@ -24,5 +24,21 @@ export default {
         title: 'forget-password',
       },
     },
+    {
+      path: 'otp',
+      name: 'otp',
+      component: () => import('./OtpPage.vue'),
+      meta: {
+        title: 'otp',
+      },
+    },
+    {
+      path: 'reset-password',
+      name: 'reset-password',
+      component: () => import('./ResetPasswordPage.vue'),
+      meta: {
+        title: 'reset-password',
+      },
+    },
   ],
 }

@@ -1,9 +1,9 @@
-import ApiClient from '@/helpers/api.helper';
+import ApiClient from '@/helpers/api.helper'
 
 class VerifyOtp extends ApiClient {
   constructor() {
-    super('verify-otp');
+    super('auth/user/checkOTP')
   }
 }
 
-export default new VerifyOtp();
+export default new VerifyOtp()

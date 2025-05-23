@@ -35,12 +35,12 @@
           استعادة كلمة المرور
         </h1>
         <p class="text-center text-surface-600 dark:text-surface-300">
-          اختر إرسال رمز التحقق عبر رقم الهاتف أو البريد الإلكتروني
+          اختر إرسال رمز التحقق عبر رقم الهاتف أو البريد الإلكتروني او اسم المستخدم
         </p>
       </div>
 
       <!-- Form Section -->
-      <form @submit.prevent="requestOtp" class="flex flex-col gap-6 animate-fade-in">
+      <form @submit.prevent="" class="flex flex-col gap-6 animate-fade-in">
         <div class="flex flex-col gap-2">
           <label class="text-surface-900 dark:text-surface-50 font-medium">
             طريقة إرسال رمز التحقق <span class="text-red-500">*</span>
@@ -68,22 +68,31 @@
                 >البريد الإلكتروني</label
               >
             </div>
+
+            <div class="flex items-center gap-2">
+              <RadioButton
+                inputId="userName"
+                name="otpMethod"
+                value="userName"
+                v-model="createObj.otpMethod"
+                aria-label="إرسال عبر البريد الإلكتروني"
+              />
+              <label for="userName" class="text-surface-900 dark:text-surface-50"
+                >إسم المستخدم</label
+              >
+            </div>
           </div>
         </div>
 
         <div v-if="createObj.otpMethod === 'phone'" class="flex flex-col gap-2">
-          <a-input
-            label="رقم الهاتف"
-            placeholder="أدخل رقم الهاتف (مثال: +966123456789)"
+          <a-phone
             v-model="createObj.phone"
-            :errorMessage="$t('errors.required')"
+            class="md:col-span-2"
+            :errorMessage="v$.phone.required.$invalid && $t('errors.required')"
             :error="v$.phone.$error"
             @blur="v$.phone.$touch"
-          >
-            <template #label>
-              <span>رقم الهاتف <span class="text-red-500">*</span></span>
-            </template>
-          </a-input>
+            @country="(val) => (createObj.country_code = val)"
+          />
         </div>
 
         <div v-if="createObj.otpMethod === 'email'" class="flex flex-col gap-2">
@@ -101,18 +110,33 @@
           </a-input>
         </div>
 
+        <div v-if="createObj.otpMethod === 'userName'" class="flex flex-col gap-2">
+          <a-input
+            label="إسم المستخدم"
+            placeholder="أدخل  اسم المستخدم"
+            v-model="createObj.userName"
+            :errorMessage="$t('errors.required')"
+            :error="v$.userName.$error"
+            @blur="v$.userName.$touch"
+          >
+            <template #label>
+              <span> اسم المستخدم <span class="text-red-500">*</span></span>
+            </template>
+          </a-input>
+        </div>
+
         <a-button
           type="submit"
           label="إرسال رمز التحقق"
           iconPos="right"
           icon="pi pi-envelope"
           :loading="loading"
-          :disabled="uiFlags.isLoading || v$.$error || !createObj.otpMethod"
+          :disabled="uiFlags.isLoading || isInvalid"
           @click="submit()"
         />
 
         <router-link
-          to="/login"
+          to="/sign-in"
           class="text-primary-500 font-medium hover:text-primary-600 transition-colors text-center"
           aria-label="العودة إلى تسجيل الدخول"
         >
@@ -126,54 +150,84 @@
 
 <script setup>
 import useImages from '@/helpers/images.helper'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/Auth/auth.store'
 import RadioButton from 'primevue/radiobutton'
+import { useRouter } from 'vue-router'
 
 // Variables
-const { requestOtp, uiFlags } = useAuthStore()
+const router = useRouter()
+const { forgetPassword, uiFlags } = useAuthStore()
 const loading = ref(false)
 const images = useImages()
 const createObj = ref({
   phone: '',
   email: '',
+  userName: '',
+  country_code: '',
   otpMethod: 'phone', // Default to phone
 })
 
-const rules = {
-  phone: {
-    required: {
-      $validator: required,
-      $message: 'رقم الهاتف مطلوب',
-      $if: () => createObj.value.otpMethod === 'phone',
-    },
-  },
-  email: {
-    required: {
-      $validator: required,
-      $message: 'البريد الإلكتروني مطلوب',
-      $if: () => createObj.value.otpMethod === 'email',
-    },
-    email: {
-      $validator: email,
-      $message: 'البريد الإلكتروني غير صالح',
-      $if: () => createObj.value.otpMethod === 'email',
-    },
-  },
-}
+// Dynamic validation rules based on otpMethod
+const rules = computed(() => ({
+  otpMethod: { required },
+  phone: createObj.value.otpMethod === 'phone' ? { required } : {},
+  userName: createObj.value.otpMethod === 'userName' ? { required } : {},
+  email: createObj.value.otpMethod === 'email' ? { required, email } : {},
+  country_code: createObj.value.otpMethod === 'phone' ? { required } : {},
+}))
 
 const v$ = useVuelidate(rules, createObj)
 
+// Compute form validity to enable/disable submit button
+const isInvalid = computed(() => {
+  if (!createObj.value.otpMethod) return true
+  if (createObj.value.otpMethod === 'phone') {
+    return v$.value.phone.$error || !createObj.value.phone
+  }
+  if (createObj.value.otpMethod === 'email') {
+    return v$.value.email.$error || !createObj.value.email
+  }
+  if (createObj.value.otpMethod === 'userName') {
+    return v$.value.userName.$error || !createObj.value.userName
+  }
+  return false
+})
+
 const submit = async () => {
   v$.value.$touch()
-  if (v$.value.$error || !createObj.value.otpMethod) return
+  if (isInvalid.value) return
+
   try {
     loading.value = true
-    await requestOtp({
-      phone: createObj.value.otpMethod === 'phone' ? createObj.value.phone : '',
-      email: createObj.value.otpMethod === 'email' ? createObj.value.email : '',
+    // Prepare payload with only the relevant field
+    const payload = {
+      otpMethod: createObj.value.otpMethod,
+      [createObj.value.otpMethod]: createObj.value[createObj.value.otpMethod],
+    }
+
+    if (createObj.value.otpMethod === 'phone') {
+      payload.country_code = createObj.value.country_code
+    }
+
+    await forgetPassword(payload)
+    // add query params to route with type ot otpmethod
+    const query = {
+      otpMethod: createObj.value.otpMethod,
+      [createObj.value.otpMethod]: createObj.value[createObj.value.otpMethod],
+    }
+
+    // Add country_code to query if otpMethod is 'phone'
+    if (createObj.value.otpMethod === 'phone') {
+      query.country_code = createObj.value.country_code
+    }
+
+    // Single router.push with dynamic query
+    router.push({
+      name: 'otp',
+      query,
     })
   } finally {
     loading.value = false
