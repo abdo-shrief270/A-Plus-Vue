@@ -45,7 +45,7 @@ export default {
     {
       path: 'profile',
       name: 'profile',
-      component: () => import('./ProfilePage.vue'),
+      component: () => import('./Profile/ProfilePage.vue'),
       beforeEnter: authGuard,
     },
   ],

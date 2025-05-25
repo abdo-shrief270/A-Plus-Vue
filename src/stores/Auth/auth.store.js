@@ -122,7 +122,7 @@ export const useAuthStore = defineStore('Auth', {
         window.$cookies.set('aplus-token', data.data.token, '30d')
         // store type of user in cookies
         window.$cookies.set('aplus-userType', data.data.type, '30d')
-        this.record = data.data
+        this.getProfile
         if (showMassage) {
           toast.showToast('SUCCESS', data.message, 'success')
         }
@@ -180,7 +180,7 @@ export const useAuthStore = defineStore('Auth', {
       try {
         this.uiFlags.isLoggingIn = true
         const { data } = await ProfileServices.get()
-        this.record = data.data
+        this.record = data.data.data
       } catch (error) {
         console.log(error)
         throw error

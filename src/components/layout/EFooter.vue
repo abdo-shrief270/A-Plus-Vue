@@ -1,8 +1,10 @@
 <template>
   <footer
-    class="relative overflow-hidden bg-primary-50 dark:bg-primary-950 border-t border-primary-200 dark:border-primary-800 p-6 lg:p-8 shadow-lg animate-fade-in transition-colors duration-300"
+    class="relative overflow-hidden bg-primary-50 dark:bg-primary-950 border-t border-primary-200 dark:border-primary-800 p-6 lg:p-8 shadow-lg transition-colors duration-300"
     role="contentinfo"
     aria-label="معلومات القاعدة"
+    itemscope
+    itemtype="http://schema.org/WPFooter"
   >
     <!-- Background Image with Lazy Loading -->
     <img
@@ -18,10 +20,10 @@
 
     <!-- Content Container -->
     <div
-      class="container mx-auto relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
+      class="container mx-auto relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12"
     >
       <!-- Logo and Description -->
-      <div class="flex flex-col items-start">
+      <div class="flex flex-col items-start animate-slide-up" style="--delay: 0.1s">
         <div class="flex items-center mb-4">
           <div class="relative p-1 rounded-full bg-gradient-to-r from-success-400 to-primary-400">
             <img
@@ -36,9 +38,17 @@
               class="absolute inset-0 bg-neutrals-white dark:bg-neutrals-950 opacity-20 rounded-full shine-effect"
             ></div>
           </div>
-          <span class="text-2xl font-bold text-primary-800 dark:text-primary-100 ms-2">ESY</span>
+          <span
+            class="text-2xl font-bold text-primary-800 dark:text-primary-100 ms-2"
+            itemprop="name"
+          >
+            ESY
+          </span>
         </div>
-        <p class="text-secondary-700 dark:text-secondary-200 text-base leading-relaxed">
+        <p
+          class="text-secondary-700 dark:text-secondary-200 text-base leading-relaxed"
+          itemprop="description"
+        >
           ربط العالم بموارد تعليمية عالية الجودة لتحقيق مستقبل أفضل.
         </p>
         <!-- Newsletter Signup -->
@@ -47,28 +57,44 @@
           class="mt-4 w-full"
           aria-label="الاشتراك في النشرة الإخبارية"
         >
-          <div class="flex gap-2">
-            <input
-              type="email"
-              v-model="email"
-              placeholder="ادخل بريدك الإلكتروني"
-              class="flex-1 p-2 rounded-lg border border-primary-300 dark:border-primary-700 bg-transparent text-secondary-700 dark:text-secondary-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
-              aria-label="البريد الإلكتروني للنشرة الإخبارية"
-              required
-            />
+          <div class="flex flex-col sm:flex-row gap-2">
+            <div class="relative flex-1">
+              <input
+                type="email"
+                v-model="email"
+                placeholder="ادخل بريدك الإلكتروني"
+                class="w-full p-2 rounded-lg border border-primary-300 dark:border-primary-700 bg-transparent text-secondary-700 dark:text-secondary-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300"
+                :class="{ 'border-red-500': emailError }"
+                aria-label="البريد الإلكتروني للنشرة الإخبارية"
+                required
+                aria-describedby="email-error"
+              />
+              <span
+                v-if="emailError"
+                id="email-error"
+                class="absolute -bottom-6 text-red-500 text-xs"
+                >{{ emailError }}</span
+              >
+            </div>
             <button
               type="submit"
-              class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-300"
+              class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               aria-label="اشترك الآن"
+              :disabled="isSubmitting"
             >
-              اشترك
+              {{ isSubmitting ? 'جاري الاشتراك...' : 'اشترك' }}
             </button>
           </div>
         </form>
       </div>
 
       <!-- About Us -->
-      <div>
+      <nav
+        class="animate-slide-up"
+        style="--delay: 0.2s"
+        aria-label="روابط معلومات عنا"
+        role="navigation"
+      >
         <h2
           class="mb-4 text-sm font-semibold text-primary-900 dark:text-primary-100 uppercase tracking-wider"
         >
@@ -76,19 +102,24 @@
         </h2>
         <ul class="space-y-2">
           <li v-for="(item, index) in websiteSections.about" :key="index">
-            <a
-              :href="`/about#${item.toLowerCase()}`"
-              class="text-secondary-700 dark:text-secondary-200 hover:text-primary-500 transition-all duration-300 transform hover:scale-105 inline-block focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg px-2 py-1"
-              :aria-label="`معلومات عن ${item}`"
+            <RouterLink
+              :to="item.route"
+              class="text-secondary-700 dark:text-secondary-200 hover:text-primary-500 transition-all duration-300"
+              :aria-label="`انتقل إلى ${item.title}`"
             >
-              {{ item }}
-            </a>
+              {{ item.title }}
+            </RouterLink>
           </li>
         </ul>
-      </div>
+      </nav>
 
       <!-- Services -->
-      <div>
+      <nav
+        class="animate-slide-up"
+        style="--delay: 0.3s"
+        aria-label="روابط الخدمات"
+        role="navigation"
+      >
         <h2
           class="mb-4 text-sm font-semibold text-primary-900 dark:text-primary-100 uppercase tracking-wider"
         >
@@ -105,21 +136,22 @@
             </a>
           </li>
         </ul>
-      </div>
+      </nav>
 
       <!-- Contact Info -->
-      <div>
+      <div class="animate-slide-up" style="--delay: 0.4s">
         <h2
           class="mb-4 text-sm font-semibold text-primary-900 dark:text-primary-100 uppercase tracking-wider"
         >
           تواصلوا معنا
         </h2>
-        <ul class="space-y-2">
+        <ul class="space-y-2" itemscope itemtype="http://schema.org/ContactPoint">
           <li>
             <a
               href="mailto:support@esy.com"
               class="text-secondary-700 dark:text-secondary-200 hover:text-primary-500 transition-all duration-300 inline-flex items-center gap-2"
               aria-label="راسلنا عبر البريد الإلكتروني"
+              itemprop="email"
             >
               <i class="pi pi-envelope"></i>
               support@esy.com
@@ -130,6 +162,7 @@
               href="tel:+1234567890"
               class="text-secondary-700 dark:text-secondary-200 hover:text-primary-500 transition-all duration-300 inline-flex items-center gap-2"
               aria-label="اتصل بنا"
+              itemprop="telephone"
             >
               <i class="pi pi-phone"></i>
               +123-456-7890
@@ -139,6 +172,7 @@
             <span
               class="text-secondary-700 dark:text-secondary-200 inline-flex items-center gap-2"
               aria-label="عنوان المكتب"
+              itemprop="address"
             >
               <i class="pi pi-map-marker"></i>
               123 شارع التعليم، المدينة
@@ -151,10 +185,11 @@
     <!-- Separator and Bottom Section -->
     <hr class="my-6 border-primary-200 dark:border-primary-800 transition-colors duration-300" />
     <div
-      class="container mx-auto relative z-10 flex flex-col md:flex-row justify-between items-center gap-4"
+      class="container mx-auto relative z-10 flex flex-col md:flex-row justify-between items-center gap-4 animate-slide-up"
+      style="--delay: 0.5s"
     >
       <div class="flex flex-col items-center md:items-start text-center md:text-right">
-        <span class="text-secondary-700 dark:text-secondary-200 text-sm">
+        <span class="text-secondary-700 dark:text-secondary-200 text-sm" itemprop="copyrightNotice">
           © {{ currentYear }} منصة التعليم. جميع الحقوق محفوظة.
         </span>
         <div class="flex gap-4 mt-2">
@@ -179,11 +214,12 @@
           v-for="(icon, index) in socialIcons"
           :key="index"
           :href="icon.href"
-          class="text-secondary-500 hover:text-primary-600 transition-all duration-300 animate-pulse transform hover:scale-110"
+          class="text-secondary-500 hover:text-primary-600 transition-all duration-300 transform hover:scale-110"
           :aria-label="`تابعنا على ${icon.label}`"
           :class="[icon.class]"
           target="_blank"
           rel="noopener noreferrer"
+          itemprop="sameAs"
         >
           <span class="sr-only">{{ icon.label }}</span>
         </a>
@@ -193,19 +229,24 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { RouterLink } from 'vue-router'
 import useImages from '@/helpers/images.helper'
-import { onUnmounted } from 'vue'
 
 const images = useImages()
 const email = ref('')
+const emailError = ref('')
+const isSubmitting = ref(false)
 const isParallax = ref(false)
 
 // Dynamic year for copyright
 const currentYear = computed(() => new Date().getFullYear())
 
 const websiteSections = {
-  about: ['من نحن', 'رؤيتنا', 'قيمنا', 'فريقنا'],
+  about: [
+    { title: 'من نحن', route: '/about' },
+    { title: 'تواصل معنا', route: '/contact' },
+  ],
   services: ['دوراتنا', 'الدعم الفني', 'مركز المساعدة', 'المجتمع'],
 }
 
@@ -220,23 +261,47 @@ const socialIcons = [
 const handleScroll = () => {
   isParallax.value = window.scrollY > 100
 }
+
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
 })
+
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
+// Email validation
+const validateEmail = (email) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return re.test(email)
+}
+
 // Newsletter signup handler
 const handleNewsletterSignup = async () => {
-  if (!email.value) return
+  if (!email.value) {
+    emailError.value = 'البريد الإلكتروني مطلوب'
+    return
+  }
+
+  if (!validateEmail(email.value)) {
+    emailError.value = 'الرجاء إدخال بريد إلكتروني صحيح'
+    return
+  }
+
+  isSubmitting.value = true
+  emailError.value = ''
+
   try {
     // Simulated API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Subscribing:', email.value)
     email.value = ''
     // Add toast notification here
   } catch (error) {
     console.error('Subscription failed:', error)
+    emailError.value = 'فشل الاشتراك، حاول مرة أخرى'
+  } finally {
+    isSubmitting.value = false
   }
 }
 
@@ -253,12 +318,13 @@ const handleImageError = (type) => {
   font-family: var(--font-family-sans);
 }
 
-/* Enhanced Fade-in animation */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+/* Slide-up animation with stagger */
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+  animation-delay: var(--delay);
 }
 
-@keyframes fadeIn {
+@keyframes slideUp {
   0% {
     opacity: 0;
     transform: translateY(20px);
@@ -266,21 +332,6 @@ const handleImageError = (type) => {
   100% {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Enhanced Pulse animation for social icons */
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
   }
 }
 
@@ -308,7 +359,7 @@ const handleImageError = (type) => {
 /* Input focus states */
 input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(var(--primary-500-rgb), 0.2);
+  box-shadow: 0 0 0 3px rgba(var(--primary-500-rgb), 0.3);
 }
 
 /* Hover effects for links */
@@ -346,23 +397,26 @@ img {
 }
 
 @media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
   .text-2xl {
-    font-size: var(--font-size-xl);
-    line-height: var(--line-height-xl);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
   .text-sm {
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xs);
-  }
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 
 @media (max-width: 640px) {
-  .grid-cols-4 {
-    grid-template-columns: 1fr;
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .flex-row {
+    flex-direction: column;
   }
 }
 </style>

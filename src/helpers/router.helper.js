@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/stores/Auth/auth.store'
 
 export const authGuard = (to, from, next) => {
-  const tokenExists = window.$cookies.isKey(`esy-token`)
+  const tokenExists = window.$cookies.isKey(`aplus-token`)
   if (tokenExists) {
     next()
   } else {
@@ -11,7 +11,7 @@ export const authGuard = (to, from, next) => {
 }
 
 export const guestGuard = (to, from, next) => {
-  const tokenExists = window.$cookies.isKey(`esy-token`)
+  const tokenExists = window.$cookies.isKey(`aplus-token`)
   if (tokenExists) {
     next()
   } else {

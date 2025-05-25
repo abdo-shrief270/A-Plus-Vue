@@ -1,9 +1,9 @@
-import ApiClient from '@/helpers/api.helper';
+import ApiClient from '@/helpers/api.helper'
 
 class Profile extends ApiClient {
   constructor() {
-    super('profile');
+    super('auth/user')
   }
 }
 
-export default new Profile();
+export default new Profile()

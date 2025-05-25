@@ -86,23 +86,43 @@
       </div>
 
       <div v-else>
-        <Button label="تسجيل الخروج" @click="logout" />
+        <Button
+          type="button"
+          @click="toggle"
+          rounded
+          aria-haspopup="true"
+          aria-controls="overlay_menu"
+          class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-2"
+        >
+          <span class="hidden md:inline-block">{{ userInitials }}</span>
+        </Button>
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </div>
     </div>
   </nav>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import useImages from '@/helpers/images.helper'
 import { useAuthStore } from '@/stores/Auth/auth.store'
+import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 
-const { logout, isLogin } = useAuthStore()
+const router = useRouter()
+const authStore = computed(() => useAuthStore())
+const isLogin = computed(() => authStore.value?.isLogin)
 const images = useImages()
 const logo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=noto')
 const isMenuOpen = ref(false)
 const appName = ref('ESY')
 
+const userInitials = computed(() => {
+  if (isLogin.value) {
+    return authStore.value?.record?.user_name.slice(0, 2).toUpperCase()
+  }
+  return 'US' // Fallback initials
+})
 // Router links as object with colorful FakeImg.pl icons
 const menuItemsObj = ref({
   plan: {
@@ -136,6 +156,34 @@ const handleImageError = () => {
 const handleIconError = (id) => {
   menuItemsObj.value[id].icon = 'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
 }
+
+const menu = ref()
+const items = ref([
+  {
+    label: 'الملف الشخصي',
+    icon: 'pi pi-user',
+    command: () => {
+      router.push('/profile')
+    },
+  },
+  {
+    label: 'تسجيل الخروج',
+    icon: 'pi pi-sign-out',
+    command: () => {
+      authStore.value.logout()
+    },
+  },
+])
+
+const toggle = (event) => {
+  menu.value.toggle(event)
+}
+
+onMounted(() => {
+  if (authStore.value?.isLogin) {
+    authStore.value?.getProfile()
+  }
+})
 </script>
 
 <style scoped>

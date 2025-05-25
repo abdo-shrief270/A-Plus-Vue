@@ -128,7 +128,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useContactUsStore } from '@/stores/Contact/contact.store'
 
 const contactService = useContactUsStore()
@@ -164,6 +164,10 @@ const submitForm = async () => {
     isSubmitting.value = false
   }
 }
+
+onMounted(() => {
+  window.scrollTo(0, 0)
+})
 </script>
 
 <style scoped>
