@@ -154,14 +154,13 @@
             />
           </div>
           <div class="flex flex-col gap-2 relative">
-            <a-input
-              label="رقم الهاتف"
-              placeholder="رقم الهاتف"
+            <a-phone
               v-model="createObj.phone"
-              :errorMessage="$t('errors.required')"
+              class="md:col-span-2"
+              :errorMessage="v$.phone.required.$invalid && $t('errors.required')"
               :error="v$.phone.$error"
               @blur="v$.phone.$touch"
-              class="transition-all duration-300 focus:ring-2 focus:ring-primary-600 rounded-lg"
+              @country="(val) => (createObj.country_code = val)"
             />
           </div>
           <div class="flex flex-col gap-2 relative">

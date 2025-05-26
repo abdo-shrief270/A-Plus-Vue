@@ -65,7 +65,7 @@
 
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <router-link
-            to="/login"
+            to="/sign-in"
             class="text-primary-500 font-medium hover:text-primary-600 transition-colors"
             aria-label="العودة إلى تسجيل الدخول"
           >
