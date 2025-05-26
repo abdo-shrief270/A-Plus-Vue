@@ -59,11 +59,18 @@
           <div class="flex flex-col gap-2">
             <a-input
               label="اسم المستخدم"
-              v-model="form.user_name"
               placeholder="اسم المستخدم"
-              disabled
-              aria-readonly="true"
+              v-model="form.user_name"
+              :errorMessage="$t('errors.required')"
+              :error="v$.user_name.$error"
+              @blur="v$.user_name.$touch"
+              class="transition-all duration-300 focus:ring-2 focus:ring-primary-600 rounded-lg"
+              @input="checkUsernameAvailability()"
             />
+            <div v-if="isUsernameAvailable !== null" class="text-sm mt-1">
+              <span v-if="isUsernameAvailable" class="text-green-600">اسم المستخدم متاح</span>
+              <span v-else class="text-red-600">اسم المستخدم غير متاح</span>
+            </div>
           </div>
           <div class="flex flex-col gap-2">
             <a-input
@@ -82,15 +89,6 @@
               label="رقم الهاتف"
               v-model="form.phone"
               placeholder="رقم الهاتف"
-              disabled
-              aria-readonly="true"
-            />
-          </div>
-          <div class="flex flex-col gap-2">
-            <a-input
-              label="النوع"
-              v-model="form.type"
-              placeholder="النوع"
               disabled
               aria-readonly="true"
             />
@@ -141,19 +139,23 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, inject } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
 import { useAuthStore } from '@/stores/Auth/auth.store'
 import useImages from '@/helpers/images.helper'
 import Toast from 'primevue/toast'
 import { optionsGender } from '@/enums/genders.enums'
+import { debounce } from 'vue-debounce'
 
+const $api = inject('$api')
+const checkUsername = new $api('auth/username/check')
 // Variables
 const genders = computed(() => optionsGender.value())
 const images = useImages()
 const authStore = computed(() => useAuthStore())
-
+const loading = ref(false)
+const isUsernameAvailable = ref(null) // New state for username availability
 const isEditing = ref(false)
 const isSubmitting = ref(false)
 const isLoading = ref(false)
@@ -166,11 +168,13 @@ const form = computed(() => {
     email: user.value?.email || '',
     phone: user.value?.phone || '',
     type: user.value?.type || '',
-    gender: genders.value.find((g) => g.value === user.value?.gender) || '',
+    gender: user.value.gender,
   }
 })
 const rules = {
   name: { required },
+  user_name: { required },
+  phone: { required }, // Assuming phone is required, adjust
   email: { required, email },
 }
 
@@ -223,6 +227,25 @@ onMounted(async () => {
     initializeForm()
   }
 })
+
+const checkUsernameAvailability = debounce(async () => {
+  if (!form.value.user_name) {
+    isUsernameAvailable.value = null
+    return
+  }
+  try {
+    loading.value = true
+    const { data } = await checkUsername.create({ user_name: form.value.user_name })
+    console.log(data)
+    isUsernameAvailable.value = data.data.available // Adjust based on your API response
+    console.log('Username check response:', data)
+  } catch (error) {
+    console.error('Username check failed:', error)
+    isUsernameAvailable.value = false
+  } finally {
+    loading.value = false
+  }
+}, 400)
 </script>
 
 <style scoped>
