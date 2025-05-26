@@ -71,13 +71,13 @@
 
             <div class="flex items-center gap-2">
               <RadioButton
-                inputId="userName"
+                inputId="user_name"
                 name="otpMethod"
-                value="userName"
+                value="user_name"
                 v-model="createObj.otpMethod"
                 aria-label="إرسال عبر البريد الإلكتروني"
               />
-              <label for="userName" class="text-surface-900 dark:text-surface-50"
+              <label for="user_name" class="text-surface-900 dark:text-surface-50"
                 >إسم المستخدم</label
               >
             </div>
@@ -110,14 +110,14 @@
           </a-input>
         </div>
 
-        <div v-if="createObj.otpMethod === 'userName'" class="flex flex-col gap-2">
+        <div v-if="createObj.otpMethod === 'user_name'" class="flex flex-col gap-2">
           <a-input
             label="إسم المستخدم"
             placeholder="أدخل  اسم المستخدم"
-            v-model="createObj.userName"
+            v-model="createObj.user_name"
             :errorMessage="$t('errors.required')"
-            :error="v$.userName.$error"
-            @blur="v$.userName.$touch"
+            :error="v$.user_name.$error"
+            @blur="v$.user_name.$touch"
           >
             <template #label>
               <span> اسم المستخدم <span class="text-red-500">*</span></span>
@@ -165,7 +165,7 @@ const images = useImages()
 const createObj = ref({
   phone: '',
   email: '',
-  userName: '',
+  user_name: '',
   country_code: '',
   otpMethod: 'phone', // Default to phone
 })
@@ -174,7 +174,7 @@ const createObj = ref({
 const rules = computed(() => ({
   otpMethod: { required },
   phone: createObj.value.otpMethod === 'phone' ? { required } : {},
-  userName: createObj.value.otpMethod === 'userName' ? { required } : {},
+  user_name: createObj.value.otpMethod === 'user_name' ? { required } : {},
   email: createObj.value.otpMethod === 'email' ? { required, email } : {},
   country_code: createObj.value.otpMethod === 'phone' ? { required } : {},
 }))
@@ -190,8 +190,8 @@ const isInvalid = computed(() => {
   if (createObj.value.otpMethod === 'email') {
     return v$.value.email.$error || !createObj.value.email
   }
-  if (createObj.value.otpMethod === 'userName') {
-    return v$.value.userName.$error || !createObj.value.userName
+  if (createObj.value.otpMethod === 'user_name') {
+    return v$.value.user_name.$error || !createObj.value.user_name
   }
   return false
 })
