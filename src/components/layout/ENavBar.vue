@@ -94,7 +94,7 @@
           aria-controls="overlay_menu"
           class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-2"
         >
-          <span class="hidden md:inline-block">{{ userInitials }}</span>
+          <img :src="images.logo" alt="" class="w-8 h-8 rounded-full" />
         </Button>
         <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </div>
@@ -117,12 +117,6 @@ const logo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=no
 const isMenuOpen = ref(false)
 const appName = ref('ESY')
 
-const userInitials = computed(() => {
-  if (isLogin.value) {
-    return authStore.value?.record?.user_name.slice(0, 2).toUpperCase()
-  }
-  return 'US' // Fallback initials
-})
 // Router links as object with colorful FakeImg.pl icons
 const menuItemsObj = ref({
   plan: {

@@ -32,36 +32,11 @@ export const useAuthStore = defineStore('Auth', {
         const { data } = await RegisterStudentServices.create(obj)
         toast.showToast('SUCCESS', data.message, 'success')
         this.record = data.data
-        window.$cookies.set('aplus-token', data.data.token, '30d')
         router.push({
-          name: 'home',
+          name: 'sign-in',
         })
       } catch (error) {
-        if (error.response.data.status == 409) {
-          if (error.response.data.errors.type === 'instructor') {
-            router.push({
-              name: 'sign-in',
-              query: {
-                type: 'teacher',
-              },
-            })
-          } else {
-            router.push({
-              name: 'verify-otp',
-              query: {
-                phone: obj?.phone,
-              },
-            })
-
-            this.login(
-              {
-                country_code: obj?.country_code,
-                phone: obj?.phone,
-              },
-              false,
-            )
-          }
-        }
+        console.error(error)
         return error
       } finally {
         this.uiFlags.isCreating = false
