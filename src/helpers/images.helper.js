@@ -9,6 +9,8 @@ import HomeAbout from '../assets/images/homeAbout.png'
 import footer from '../assets/images/footer.svg'
 import parent from '../assets/images/parent.jpg'
 import student from '../assets/images/student.jpg'
+import parentAuth from '../assets/images/auth/parentAuth.png'
+import girlAuth from '../assets/images/auth/girlAuth.png'
 export default function useImages() {
   return ref({
     logo,
@@ -21,5 +23,7 @@ export default function useImages() {
     footer,
     parent,
     student,
+    parentAuth,
+    girlAuth,
   })
 }

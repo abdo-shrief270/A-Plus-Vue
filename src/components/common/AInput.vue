@@ -1,8 +1,8 @@
 <template>
   <label class="block w-full">
-    <div class="mb-2 font-medium flex items-center gap-2">
+    <div class="my-4 font-medium flex items-center gap-2">
       <slot name="icon" />
-      <p class="capitalize text-black text-sm">{{ $t(label) }}</p>
+      <p class="capitalize text-black text-sm font-bold">{{ $t(label) }}</p>
       <span v-if="required" class="text-red-500">*</span>
     </div>
     <InputText
@@ -26,42 +26,42 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed } from 'vue'
 
 const props = defineProps({
   modelValue: {
     type: [String, Number, Object, null],
-    required: true
+    required: true,
   },
   type: {
     type: String,
-    default: 'text'
+    default: 'text',
   },
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   placeholder: { type: String, default: '' },
   required: {
     type: Boolean,
-    default: false
+    default: false,
   },
   error: {
     type: Boolean,
-    default: false
+    default: false,
   },
   errorMessage: {
     type: String,
-    default: ''
-  }
-});
+    default: '',
+  },
+})
 
 const computedValue = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-});
+  set: (value) => emit('update:modelValue', value),
+})
 
-const emit = defineEmits(['update:modelValue', 'blur']);
+const emit = defineEmits(['update:modelValue', 'blur'])
 </script>
 
 <style scoped></style>

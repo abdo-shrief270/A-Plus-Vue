@@ -1,6 +1,6 @@
 <template>
   <label class="block">
-    <p class="mb-2 capitalize text-gray-700">رقم الهاتف</p>
+    <p class="my-4 capitalize font-bold text-gray-700">رقم الهاتف</p>
     <vue-tel-input
       v-model="phone"
       :autoFormat="false"

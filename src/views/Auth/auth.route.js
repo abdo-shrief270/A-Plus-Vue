@@ -40,5 +40,13 @@ export default {
         title: 'reset-password',
       },
     },
+    {
+      path: 'verify-way',
+      name: 'verify-way',
+      component: () => import('./VerifyWay.vue'),
+      meta: {
+        title: 'verify-way',
+      },
+    },
   ],
 }

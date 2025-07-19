@@ -7,7 +7,7 @@
     :loading="loading"
     :type="type"
     :label="$t(label)"
-    class="w-full font-bold rounded-lg text-sm relative"
+    class="w-full font-bold rounded-4xl text-sm relative"
     :icon="icon"
     @click="($event) => emit('click', $event)"
   >
@@ -15,40 +15,40 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['click']);
+const emit = defineEmits(['click'])
 
 defineProps({
   label: {
     type: String,
-    default: ''
+    default: '',
   },
   icon: {
     type: String,
-    default: ''
+    default: '',
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   disabled: {
     type: Boolean,
-    default: false
+    default: false,
   },
   type: {
     type: String,
-    default: 'primary'
+    default: 'primary',
   },
   severity: {
     type: String,
-    default: ''
+    default: '',
   },
   variant: {
     type: String,
-    default: ''
+    default: '',
   },
   size: {
     type: String,
-    default: 'small'
-  }
-});
+    default: 'small',
+  },
+})
 </script>
