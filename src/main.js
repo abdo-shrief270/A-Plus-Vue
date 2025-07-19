@@ -12,6 +12,7 @@ import 'vue-tel-input/vue-tel-input.css'
 import VueTelInput from 'vue-tel-input'
 import VueCookies from 'vue-cookies'
 import ApiClient from '@/helpers/api.helper'
+import 'primeicons/primeicons.css'
 
 const app = createApp(App)
 
