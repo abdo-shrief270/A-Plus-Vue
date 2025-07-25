@@ -360,6 +360,7 @@ const submitForm = async () => {
 
   const submitData = {
     ...createObj.value,
+    user_name: createObj.value.name,
     exam_id:
       typeof createObj.value.exam_id === 'object'
         ? createObj.value.exam_id.value

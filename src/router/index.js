@@ -26,7 +26,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('e-token')
+  const isAuthenticated = !window.$cookies.get('aplus-token')
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next({ name: 'home' })
