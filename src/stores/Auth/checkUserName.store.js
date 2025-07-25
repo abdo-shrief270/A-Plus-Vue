@@ -8,16 +8,24 @@ export const useCheckUserNameStore = defineStore('check-username', {
     uiFlags: {
       isCreating: false,
     },
+    errors: false,
   }),
   getters: {},
   actions: {
-    create: async function (obj) {
+    checkUserName: async function (obj) {
       try {
         this.uiFlags.isCreating = true
         const { data } = await checkUserNameServices.create(obj)
-        toast.showToast('SUCCESS', data.message, 'success')
+        this.records = data
+        if (data?.data?.available) {
+          this.errors = false
+        }
+        if (!data?.data?.available) {
+          this.errors = true
+        }
       } catch (error) {
         console.error(error)
+        this.errors = true
         // Show a toast error message in case of failure
         throw error // rethrow error if necessary for further handling
       } finally {
