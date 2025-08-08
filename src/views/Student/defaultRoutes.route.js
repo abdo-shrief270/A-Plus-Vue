@@ -1,11 +1,12 @@
-import { authGuard } from '@/helpers/router.helper'
+import { authGuard, dashboardGuard } from '@/helpers/router.helper'
 
 export default {
   routes: [
     {
-      path: '',
+      path: '/',
       name: 'home',
       component: () => import('./Home/HomePage.vue'),
+      beforeEnter: authGuard,
       meta: {
         title: 'home',
       },
@@ -43,7 +44,7 @@ export default {
       },
     },
     {
-      path: 'profile',
+      path: '/profile',
       name: 'profile',
       component: () => import('./Profile/ProfilePage.vue'),
       beforeEnter: authGuard,

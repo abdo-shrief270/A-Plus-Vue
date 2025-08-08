@@ -101,9 +101,16 @@ export const useAuthStore = defineStore('Auth', {
         if (showMassage) {
           toast.showToast('SUCCESS', data.message, 'success')
         }
-        router.push({
-          name: 'home',
-        })
+        console.log(data)
+        if (data.data.type == 'parent' || data.user == 'admin') {
+          router.push({
+            name: 'dashboard',
+          })
+        } else {
+          router.push({
+            name: 'home',
+          })
+        }
       } catch (error) {
         console.log(error)
         throw error
