@@ -33,7 +33,7 @@ const navItems = ref([
   {
     label: 'الإعدادات',
     icon: 'pi pi-cog',
-    to: '/settings',
+    to: '/parent-settings',
   },
   {
     label: 'خروج',
@@ -61,6 +61,7 @@ const navItems = ref([
         <nav class="mt-8 space-y-2 px-4 flex-1">
           <template v-for="(item, i) in navItems" :key="i">
             <button
+              class="cursor-pointer"
               @click="item.action ? item.action() : router.push(item.to)"
               :class="[
                 'w-full flex items-center gap-3 py-2 px-3 rounded-md text-white hover:bg-teal-700 transition',

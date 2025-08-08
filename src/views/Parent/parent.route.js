@@ -14,5 +14,23 @@ export default {
       component: () => import('@/views/Parent/CoursesPage.vue'),
       beforeEnter: parentOnlyGuard,
     },
+    {
+      path: '/students',
+      name: 'students',
+      component: () => import('@/views/Parent/StudentsPage.vue'),
+      beforeEnter: parentOnlyGuard,
+    },
+    {
+      path: '/recharge',
+      name: 'recharge',
+      component: () => import('@/views/Parent/RechargePage.vue'),
+      beforeEnter: parentOnlyGuard,
+    },
+    {
+      path: '/parent-settings',
+      name: 'parent-settings',
+      component: () => import('@/views/Parent/ParentSettingsPage.vue'),
+      beforeEnter: parentOnlyGuard,
+    },
   ],
 }

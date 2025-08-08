@@ -94,7 +94,7 @@
                 class="px-3 py-1 text-xs font-semibold"
               />
             </div>
-            <div class="absolute top-3 left-3">
+            <div class="absolute top-3 left-3 shadow-lg rounded-full">
               <Button
                 icon="pi pi-heart"
                 class="p-button-rounded p-button-text p-button-sm bg-white bg-opacity-80 text-gray-600 hover:text-red-500"
