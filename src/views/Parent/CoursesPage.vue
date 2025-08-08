@@ -105,10 +105,10 @@
         </template>
         <template #content>
           <div class="p-4">
-            <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+            <h3 class="text-lg font-bold text-gray-800 mb-2 line-clamp-1">
               {{ course.title }}
             </h3>
-            <p class="text-sm text-gray-600 mb-3 line-clamp-2">
+            <p class="text-sm text-gray-600 mb-3 line-clamp-1">
               {{ course.description }}
             </p>
 
