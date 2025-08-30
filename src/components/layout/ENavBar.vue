@@ -1,254 +1,187 @@
 <template>
-  <nav
-    class="bg-gradient-to-r from-primary-50 to-secondary-100 dark:from-primary-950 dark:to-secondary-900 border-b border-primary-200 dark:border-primary-800 sticky top-0 w-full z-30 shadow-lg transition-all duration-300 animate-fade-in"
-    role="navigation"
-    aria-label="القائمة الرئيسية"
-  >
-    <div class="container mx-auto flex items-center justify-between px-4 py-4">
-      <!-- Logo -->
-      <router-link to="/" class="flex items-center gap-2" aria-label="الصفحة الرئيسية">
-        <div class="relative p-1 rounded-full bg-gradient-to-r from-success-400 to-primary-400">
-          <img
-            :src="images.logo"
-            alt="شعار المنصة"
-            class="h-10 w-10 object-contain"
-            loading="lazy"
-            @error="handleImageError"
-          />
-          <div
-            class="absolute inset-0 bg-neutrals-white dark:bg-neutrals-950 opacity-20 rounded-full shine-effect"
-          ></div>
+  <nav class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- قسم ملف المستخدم -->
+        <div class="hidden md:block" v-if="authStore.isLogin">
+          <div class="mr-4 flex items-center md:mr-6">
+            <!-- قائمة المستخدم -->
+            <div class="relative">
+              <Button
+                @click="toggle"
+                class="flex items-center space-x-2 rtl:space-x-reverse text-sm rounded-full"
+                text
+              >
+                <div class="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                  <i class="pi pi-user text-gray-600"></i>
+                </div>
+                <span class="text-gray-700 font-medium">حسابي</span>
+                <i class="pi pi-chevron-down text-gray-400 text-xs"></i>
+              </Button>
+
+              <Menu
+                ref="menu"
+                id="user_menu"
+                :model="userMenuItems"
+                :popup="true"
+                class="mt-2 w-48"
+              />
+            </div>
+          </div>
         </div>
-        <span class="text-2xl font-bold text-primary-800 dark:text-primary-100">
-          {{ appName || 'ESY' }}
-        </span>
-      </router-link>
+        <div v-else class="flex items-center gap-4">
+          <router-link
+            to="/sign-in"
+            class="text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-lg px-4 py-2 transition-colors duration-200 shadow-sm"
+          >
+            تسجيل الدخول
+          </router-link>
+          <router-link
+            to="/sign-up"
+            class="text-sm font-medium text-gray-700 hover:text-primary-600 transition-colors duration-200"
+          >
+            فتح حساب
+          </router-link>
+        </div>
 
-      <!-- Mobile Menu Toggle -->
-      <button
-        @click="toggleMenu"
-        class="md:hidden text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
-        aria-label="تبديل القائمة"
-        :aria-expanded="isMenuOpen"
-      >
-        <i
-          :class="[
-            'pi',
-            isMenuOpen ? 'pi-times' : 'pi-bars',
-            'text-2xl transition-transform duration-300',
-          ]"
-        ></i>
-      </button>
+        <!-- قائمة التنقل -->
+        <div class="hidden md:block">
+          <div class="mr-10 flex items-baseline gap-6 rtl:space-x-reverse">
+            <!-- عناصر القائمة -->
+            <router-link
+              v-for="item in menuItems"
+              :key="item.label"
+              :to="item.to"
+              class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+              :class="{
+                'text-primary-600 bg-primary-50': $route.path === item.to,
+                'text-gray-600 hover:text-primary-600': $route.path !== item.to,
+              }"
+            >
+              {{ item.label }}
+            </router-link>
+          </div>
+        </div>
 
-      <!-- Menu Items -->
-      <div
-        :class="[
-          'md:flex md:flex-row md:items-center md:gap-6',
-          isMenuOpen
-            ? 'flex flex-col absolute top-full left-0 w-full bg-neutrals-white dark:bg-secondary-900 shadow-lg md:shadow-none md:static md:bg-transparent md:dark:bg-transparent p-4 md:p-0'
-            : 'hidden',
-          'transition-all duration-300',
-        ]"
-      >
-        <router-link
-          v-for="(item, index) in Object.values(menuItemsObj)"
-          :key="item.id"
-          :to="item.route"
-          class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 hover:text-primary-300 dark:hover:text-primary-300 font-semibold p-2 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          :class="[
-            $route.path === item.route
-              ? 'bg-primary-500 text-white dark:bg-primary-400 dark:text-neutrals-100'
-              : '',
-            isMenuOpen ? 'animate-slide-in' : '',
-          ]"
-          :style="{ animationDelay: `${index * 100}ms` }"
-          :aria-current="$route.path === item.route ? 'page' : null"
-        >
-          <img
-            :src="item.icon"
-            :alt="`${item.label} أيقونة`"
-            class="w-6 h-6 object-contain rounded-full shadow-sm transition-transform duration-300 hover:scale-110"
-            loading="lazy"
-            @error="handleIconError(item.id)"
+        <!-- قسم الشعار -->
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <div class="flex items-center space-x-2 rtl:space-x-reverse">
+              <!-- أيقونة الشعار -->
+              <router-link to="/" class="w-12 h-full flex items-center justify-center">
+                <img :src="images.logo" alt="" />
+              </router-link>
+            </div>
+          </div>
+        </div>
+
+        <!-- زر قائمة الجوال -->
+        <div class="md:hidden">
+          <Button
+            @click="toggleMobileMenu"
+            icon="pi pi-bars"
+            text
+            class="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
           />
-          <span>{{ item.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- قائمة الجوال -->
+    <div v-show="mobileMenuOpen" class="md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 border-t border-gray-200">
+        <router-link
+          v-for="item in menuItems"
+          :key="item.label"
+          :to="item.to"
+          class="block px-3 py-2 rounded-md text-base font-medium w-full text-right"
+          :class="{
+            'text-blue-600 bg-blue-50': $route.path === item.to,
+            'text-gray-600 hover:text-blue-600': $route.path !== item.to,
+          }"
+        >
+          {{ item.label }}
         </router-link>
       </div>
 
-      <!-- Sign In Button -->
-      <div v-if="!isLogin">
-        <Button
-          label="الدخول"
-          class="bg-gradient-to-r from-primary-500 to-success-500 hover:from-primary-600 hover:to-success-600 dark:from-primary-400 dark:to-success-400 dark:hover:from-primary-500 dark:hover:to-success-500 text-neutrals-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          @click="$router.push('/sign-in')"
-          aria-label="تسجيل الدخول"
-        />
-      </div>
-
-      <div v-else>
-        <Button
-          type="button"
-          @click="toggle"
-          rounded
-          aria-haspopup="true"
-          aria-controls="overlay_menu"
-          class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-2"
-        >
-          <img :src="images.logo" alt="" class="w-8 h-8 rounded-full" />
-        </Button>
-        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+      <!-- قسم مستخدم الجوال -->
+      <div class="pt-4 pb-3 border-t border-gray-200 bg-gray-50">
+        <div class="flex items-center px-5">
+          <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+            <i class="pi pi-user text-gray-600"></i>
+          </div>
+          <div class="mr-3 rtl:ml-3 rtl:mr-0">
+            <div class="text-base font-medium text-gray-800">حسابي</div>
+          </div>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import useImages from '@/helpers/images.helper'
-import { useAuthStore } from '@/stores/Auth/auth.store'
+import { ref } from 'vue'
+import Button from 'primevue/button'
+import Menu from 'primevue/menu'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
+import { useAuthStore } from '@/stores/Auth/auth.store'
+import useImages from '@/helpers/images.helper'
 
-const router = useRouter()
-const authStore = computed(() => useAuthStore())
-const isLogin = computed(() => authStore.value?.isLogin)
 const images = useImages()
-const logo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=noto')
-const isMenuOpen = ref(false)
-const appName = ref('ESY')
-
-// Router links as object with colorful FakeImg.pl icons
-const menuItemsObj = ref({
-  plan: {
-    id: 'm1',
-    route: '/plan',
-    label: 'خطتي',
-    icon: 'https://fakeimg.pl/50x50/ff6b6b/ffffff?text=خطة&font=noto', // Red for planning
-  },
-  questions: {
-    id: 'm2',
-    route: '/questions',
-    label: 'بنك الأسئلة',
-    icon: 'https://fakeimg.pl/50x50/4b89ff/ffffff?text=أسئلة&font=noto', // Blue for questions
-  },
-  models: {
-    id: 'm3',
-    route: '/models',
-    label: 'نماذج',
-    icon: 'https://fakeimg.pl/50x50/2ecc71/ffffff?text=نماذج&font=noto', // Green for models
-  },
-})
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
-
-const handleImageError = () => {
-  logo.value = 'https://fakeimg.pl/100x100/cccccc/ffffff?text=بديل&font=noto'
-}
-
-const handleIconError = (id) => {
-  menuItemsObj.value[id].icon = 'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
-}
-
+const authStore = useAuthStore()
+const router = useRouter()
+// البيانات التفاعلية
+const mobileMenuOpen = ref(false)
 const menu = ref()
-const items = ref([
+
+// عناصر قائمة التنقل
+const menuItems = ref([
+  { label: 'خطتي', to: '/plan' },
+  { label: 'بنك الأسئلة', to: '/questions' },
+  { label: 'مراجعة', to: '/review' },
+  { label: 'المتصدرين', to: '/leaderboard' },
+])
+
+// عناصر قائمة المستخدم
+const userMenuItems = ref([
   {
     label: 'الملف الشخصي',
     icon: 'pi pi-user',
     command: () => {
-      router.push('/profile')
+      ProfilePage()
     },
+  },
+  {
+    label: 'الإعدادات',
+    icon: 'pi pi-cog',
+    command: () => {
+      // التعامل مع التنقل إلى الإعدادات
+      console.log('الانتقال إلى الإعدادات')
+    },
+  },
+  {
+    separator: true,
   },
   {
     label: 'تسجيل الخروج',
     icon: 'pi pi-sign-out',
     command: () => {
-      authStore.value.logout()
+      // التعامل مع تسجيل الخروج
+      console.log('تسجيل الخروج')
     },
   },
 ])
 
+const ProfilePage = () => {
+  router.push('/profile')
+}
+
+// الدوال
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
 const toggle = (event) => {
   menu.value.toggle(event)
 }
-
-onMounted(() => {
-  if (authStore.value?.isLogin) {
-    authStore.value?.getProfile()
-  }
-})
 </script>
-
-<style scoped>
-.rtl {
-  direction: rtl;
-  text-align: right;
-  font-family: var(--font-family-sans);
-}
-
-/* Fade-in animation for navbar */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Slide-in animation for mobile menu items */
-.animate-slide-in {
-  animation: slideIn 0.3s ease-out forwards;
-}
-
-@keyframes slideIn {
-  0% {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Shine effect for logo */
-.shine-effect {
-  animation: shine 4s infinite linear;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 100%;
-}
-
-@keyframes shine {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .text-2xl {
-    font-size: var(--font-size-xl);
-    line-height: var(--line-height-xl);
-  }
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-}
-</style>

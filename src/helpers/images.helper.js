@@ -11,6 +11,7 @@ import parent from '../assets/images/parent.jpg'
 import student from '../assets/images/student.jpg'
 import parentAuth from '../assets/images/auth/parentAuth.png'
 import girlAuth from '../assets/images/auth/girlAuth.png'
+import qstGirl from '../assets/images/qst/girl.png'
 export default function useImages() {
   return ref({
     logo,
@@ -25,5 +26,6 @@ export default function useImages() {
     student,
     parentAuth,
     girlAuth,
+    qstGirl,
   })
 }

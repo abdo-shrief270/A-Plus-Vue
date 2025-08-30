@@ -1,6 +1,6 @@
 <template>
-  <div class="h-max bg-gradient-to-b from-white/90 to-primary-50 backdrop-blur-2xl">
-    <div v-if="user !== 'parent'" class="h-dvh">
+  <div class="bg-gradient-to-b from-white/90 to-primary-50 backdrop-blur-2xl">
+    <div v-if="user !== 'parent'" class="">
       <e-nav-bar />
       <RouterView />
       <e-footer />

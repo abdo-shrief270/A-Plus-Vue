@@ -228,7 +228,7 @@ const createObj = ref({
   password_confirmation: null,
   phone: null,
   country_code: '+966',
-  exam_id: null,
+  exam_id: 1,
   exam_date: null,
   type: 'student',
   gender: 'male',

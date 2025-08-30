@@ -30,7 +30,7 @@ export default {
     {
       path: '/questions',
       name: 'questions',
-      component: () => import('./QuestionsPage.vue'),
+      component: () => import('./qst/QuestionsPage.vue'),
       meta: {
         title: 'questions',
       },
@@ -48,6 +48,16 @@ export default {
       name: 'profile',
       component: () => import('./Profile/ProfilePage.vue'),
       beforeEnter: authGuard,
+    },
+    {
+      path: '/questions/comparison-list',
+      name: 'comparison-list',
+      component: () => import('./qst/Comparison_list/ComparidonListPage.vue'),
+    },
+    {
+      path: '/questions/qst-details/:id',
+      name: 'qst_details',
+      component: () => import('./qst/qst_details/qstDetailsPage.vue'),
     },
   ],
 }
