@@ -9,7 +9,7 @@
       <router-link to="/" class="flex items-center gap-2" aria-label="الصفحة الرئيسية">
         <div class="relative p-1 rounded-full bg-gradient-to-r from-success-400 to-primary-400">
           <img
-            :src="images.logo"
+            :src="currentLogo"
             alt="شعار المنصة"
             class="h-10 w-10 object-contain"
             loading="lazy"
@@ -51,7 +51,7 @@
         ]"
       >
         <router-link
-          v-for="(item, index) in Object.values(menuItemsObj)"
+          v-for="(item, index) in validMenuItems"
           :key="item.id"
           :to="item.route"
           class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 hover:text-primary-300 dark:hover:text-primary-300 font-semibold p-2 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -69,7 +69,7 @@
             :alt="`${item.label} أيقونة`"
             class="w-6 h-6 object-contain rounded-full shadow-sm transition-transform duration-300 hover:scale-110"
             loading="lazy"
-            @error="handleIconError(item.id)"
+            @error="handleIconError($event, item)"
           />
           <span>{{ item.label }}</span>
         </router-link>
@@ -94,7 +94,7 @@
           aria-controls="overlay_menu"
           class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-2"
         >
-          <img :src="images.logo" alt="" class="w-8 h-8 rounded-full" />
+          <img :src="currentLogo" alt="" class="w-8 h-8 rounded-full" />
         </Button>
         <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </div>
@@ -103,54 +103,92 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import useImages from '@/helpers/images.helper'
 import { useAuthStore } from '@/stores/Auth/auth.store'
 import { useRouter } from 'vue-router'
-import { computed } from 'vue'
 
 const router = useRouter()
 const authStore = computed(() => useAuthStore())
 const isLogin = computed(() => authStore.value?.isLogin)
 const images = useImages()
-const logo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=noto')
+
+// Reactive logo state
+const currentLogo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=noto')
 const isMenuOpen = ref(false)
 const appName = ref('ESY')
 
 // Router links as object with colorful FakeImg.pl icons
 const menuItemsObj = ref({
   plan: {
-    id: 'm1',
+    id: 'plan',
     route: '/plan',
     label: 'خطتي',
     icon: 'https://fakeimg.pl/50x50/ff6b6b/ffffff?text=خطة&font=noto', // Red for planning
   },
   questions: {
-    id: 'm2',
+    id: 'questions',
     route: '/questions',
     label: 'بنك الأسئلة',
     icon: 'https://fakeimg.pl/50x50/4b89ff/ffffff?text=أسئلة&font=noto', // Blue for questions
   },
   models: {
-    id: 'm3',
+    id: 'models',
     route: '/models',
     label: 'نماذج',
     icon: 'https://fakeimg.pl/50x50/2ecc71/ffffff?text=نماذج&font=noto', // Green for models
   },
 })
 
+// Computed property to ensure menu items are always valid
+const validMenuItems = computed(() => {
+  return Object.values(menuItemsObj.value).filter(
+    (item) => item && typeof item === 'object' && item.id && item.route && item.label,
+  )
+})
+
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
+// Fixed image error handler
 const handleImageError = () => {
-  logo.value = 'https://fakeimg.pl/100x100/cccccc/ffffff?text=بديل&font=noto'
+  console.warn('Logo failed to load, using fallback')
+  currentLogo.value = 'https://fakeimg.pl/100x100/cccccc/ffffff?text=بديل&font=noto'
 }
 
-const handleIconError = (id) => {
-  menuItemsObj.value[id].icon = 'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
+// Fixed icon error handler with proper safety checks
+const handleIconError = (event, item = null) => {
+  console.warn('Icon failed to load for item:', item?.id || 'unknown')
+
+  try {
+    // Check if we have a valid item object
+    if (!item || typeof item !== 'object' || !item.id) {
+      console.warn('handleIconError: Invalid item provided')
+      return
+    }
+
+    // Check if the item exists in our menuItemsObj
+    const menuItemKey = Object.keys(menuItemsObj.value).find(
+      (key) => menuItemsObj.value[key].id === item.id,
+    )
+
+    if (menuItemKey && menuItemsObj.value[menuItemKey]) {
+      // Safely update the icon
+      menuItemsObj.value[menuItemKey].icon =
+        'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
+    } else {
+      // If item not found in menuItemsObj, update the item directly if possible
+      if ('icon' in item) {
+        item.icon = 'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
+      }
+    }
+  } catch (error) {
+    console.error('Error in handleIconError:', error)
+  }
 }
 
+// Menu items for user dropdown
 const menu = ref()
 const items = ref([
   {
@@ -170,12 +208,22 @@ const items = ref([
 ])
 
 const toggle = (event) => {
-  menu.value.toggle(event)
+  try {
+    if (menu.value && typeof menu.value.toggle === 'function') {
+      menu.value.toggle(event)
+    }
+  } catch (error) {
+    console.error('Error toggling menu:', error)
+  }
 }
 
 onMounted(() => {
-  if (authStore.value?.isLogin) {
-    authStore.value?.getProfile()
+  try {
+    if (authStore.value?.isLogin) {
+      authStore.value?.getProfile()
+    }
+  } catch (error) {
+    console.error('Error in onMounted:', error)
   }
 })
 </script>
