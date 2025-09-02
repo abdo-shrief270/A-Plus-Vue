@@ -29,7 +29,7 @@ axiosClient.interceptors.response.use(
     if (response) {
       const { status, data } = response
       console.log(response)
-      const errorMsg = data?.message || 'حدث خطأ ما'
+      const errorMsg = data?.errors || 'حدث خطأ ما'
 
       // Handle validation errors (400)
       if (status === 400 && data.errors) {

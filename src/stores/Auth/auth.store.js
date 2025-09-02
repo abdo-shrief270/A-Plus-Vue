@@ -9,7 +9,7 @@ import ProfileServices from '@/services/Auth/profile.services'
 import InstructorUpdateStatus from '@/services/Auth/instructor.services'
 import resendCodeServices from '@/services/Auth/resendCode.services'
 import forgetPasswordServices from '@/services/Auth/forgetPassword.services'
-import changePasswordServices from '@/services/Auth/change.password.services'
+import changePasswordServices from '@/services/Auth/changePassword.services'
 
 const toast = useToastService()
 export const useAuthStore = defineStore('Auth', {

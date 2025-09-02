@@ -64,7 +64,9 @@
 import { ref } from 'vue'
 import useImages from '@/helpers/images.helper'
 import { usePageImage } from '@/composables/usePageImage'
+import { useChangePasswordStore } from '@/stores/Auth/changePassword.store'
 
+const changePasswordStore = useChangePasswordStore()
 const images = useImages()
 usePageImage(new URL('@/assets/images/auth/girlAuth.png', import.meta.url).href)
 
@@ -79,5 +81,10 @@ const resetPassword = () => {
 
   console.log('إعادة تعيين كلمة المرور:', newPassword.value)
   // Call API to reset password
+  changePasswordStore.changePassword({
+    password: newPassword.value,
+    password_confirmation: confirmPassword.value,
+    token: window.$cookies.get('reset-password-token'),
+  })
 }
 </script>

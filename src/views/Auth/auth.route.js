@@ -23,6 +23,17 @@ export default {
       meta: {
         title: 'forget-password',
       },
+      beforeEnter: (to, from, next) => {
+        // ... Check if the reset-password-token cookie exists
+        const token = window.$cookies.get('reset-password-token')
+        if (!token) {
+          // If the token doesn't exist, redirect to the forget-password page
+          next({ name: 'verify-way' })
+        } else {
+          // If the token exists, allow access to the reset-password page
+          next()
+        }
+      },
     },
     {
       path: 'otp',
@@ -31,13 +42,35 @@ export default {
       meta: {
         title: 'otp',
       },
+      beforeEnter: (to, from, next) => {
+        // ... Check if the reset-password-token cookie exists
+        const token = window.$cookies.get('reset-password-token')
+        if (!token) {
+          // If the token doesn't exist, redirect to the forget-password page
+          next({ name: 'verify-way' })
+        } else {
+          // If the token exists, allow access to the reset-password page
+          next()
+        }
+      },
     },
     {
       path: 'reset-password',
-      name: 'reset-password',
+      name: 'reset-password-verify',
       component: () => import('./ResetPasswordPage.vue'),
       meta: {
         title: 'reset-password',
+      },
+      beforeEnter: (to, from, next) => {
+        // ... Check if the reset-password-token cookie exists
+        const token = window.$cookies.get('reset-password-token')
+        if (!token) {
+          // If the token doesn't exist, redirect to the forget-password page
+          next({ name: 'verify-way' })
+        } else {
+          // If the token exists, allow access to the reset-password page
+          next()
+        }
       },
     },
     {

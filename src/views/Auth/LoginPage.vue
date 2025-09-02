@@ -51,7 +51,7 @@
             />
 
             <router-link
-              to="/forget-password"
+              to="/verify-way"
               class="text-right text-sm text-primary underline cursor-pointer"
             >
               هل نسيت كلمة المرور؟

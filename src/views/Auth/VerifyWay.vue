@@ -67,14 +67,25 @@
       </div>
 
       <!-- المودال -->
-      <Dialog v-model:visible="visible" modal header="أدخل البيانات" class="w-[90vw] md:w-[30vw]">
+      <Dialog
+        :draggable="false"
+        v-model:visible="visible"
+        modal
+        header="أدخل البيانات"
+        class="w-[90vw] md:w-[30vw]"
+      >
         <div v-if="selected === 'username'">
           <label class="block mb-2 text-sm font-medium">اسم المستخدم</label>
           <InputText v-model="inputValue" class="w-full" />
         </div>
         <div v-else-if="selected === 'email'">
           <label class="block mb-2 text-sm font-medium">البريد الإلكتروني</label>
-          <InputText v-model="inputValue" class="w-full" />
+          <InputText
+            type="email"
+            v-model="inputValue"
+            placeholder="ادخل البريد الالكتروني"
+            class="w-full"
+          />
         </div>
         <div v-else-if="selected === 'phone'">
           <label class="block mb-2 text-sm font-medium">رقم الجوال</label>
@@ -82,7 +93,12 @@
         </div>
 
         <template #footer>
-          <Button label="استمرار" @click="submit" class="bg-primary w-full text-white" />
+          <Button
+            label="استمرار"
+            @click="submit"
+            :disabled="!inputValue"
+            class="bg-primary w-full text-white"
+          />
         </template>
       </Dialog>
     </div>
@@ -96,7 +112,9 @@ import Dialog from 'primevue/dialog'
 import InputText from 'primevue/inputtext'
 import InputMask from 'primevue/inputmask'
 import useImages from '@/helpers/images.helper'
+import { useResetPasswordStore } from '@/stores/Auth/resetPassword.store'
 
+const resetPasswordStore = useResetPasswordStore()
 const images = useImages()
 const selected = ref(null)
 const visible = ref(false)
@@ -111,6 +129,7 @@ const selectWay = (way) => {
 const submit = () => {
   console.log(`Selected method: ${selected.value}, Input: ${inputValue.value}`)
   visible.value = false
+  resetPasswordStore.forgetPassword({ [selected.value]: inputValue.value })
 }
 </script>
 <style scoped>
