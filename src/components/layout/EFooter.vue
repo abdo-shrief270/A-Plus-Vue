@@ -6,18 +6,6 @@
     itemscope
     itemtype="http://schema.org/WPFooter"
   >
-    <!-- Background Image with Lazy Loading -->
-    <img
-      v-if="images.homeHeroBg"
-      :src="images.homeHeroBg"
-      class="absolute inset-0 w-full h-full object-cover opacity-10 dark:opacity-10 z-0 transform transition-transform duration-1000 will-change-transform"
-      :class="{ 'scale-110': isParallax }"
-      alt="خلفية القسم الرئيسي"
-      loading="lazy"
-      decoding="async"
-      @error="handleImageError('footer')"
-    />
-
     <!-- Content Container -->
     <div
       class="container mx-auto relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12"
@@ -42,7 +30,7 @@
             class="text-2xl font-bold text-primary-800 dark:text-primary-100 ms-2"
             itemprop="name"
           >
-            ESY
+            A-Plus
           </span>
         </div>
         <p

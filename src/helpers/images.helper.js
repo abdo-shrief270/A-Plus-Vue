@@ -12,6 +12,8 @@ import student from '../assets/images/student.jpg'
 import parentAuth from '../assets/images/auth/parentAuth.png'
 import girlAuth from '../assets/images/auth/girlAuth.png'
 import examsHero from '../assets/images/exams/exams-img.png'
+import HomeHero from '../assets/images/home/hero.png'
+import HomeWhy from '../assets/images/home/howe-why.png'
 export default function useImages() {
   return ref({
     logo,
@@ -27,5 +29,7 @@ export default function useImages() {
     parentAuth,
     girlAuth,
     examsHero,
+    HomeHero,
+    HomeWhy,
   })
 }

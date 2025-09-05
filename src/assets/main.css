@@ -15,19 +15,19 @@
   --color-primary-900: #02333d;
   --color-primary-950: #01232a;
 
-  /* Secondary Colors */
-  --color-secondary: #fcbe12;
-  --color-secondary-50: #fff8e6;
-  --color-secondary-100: #ffefcc;
-  --color-secondary-200: #ffe3a3;
-  --color-secondary-300: #ffd66f;
-  --color-secondary-400: #ffc843;
-  --color-secondary-500: #fcbe12;
-  --color-secondary-600: #e1a905;
-  --color-secondary-700: #b78804;
-  --color-secondary-800: #8c6605;
-  --color-secondary-900: #6a4c04;
-  --color-secondary-950: #3d2a01;
+  /* Secondary Colors (optimized for text/paragraphs) */
+  --color-secondary: #b58900; /* base golden brown */
+  --color-secondary-50: #fdf6e3;
+  --color-secondary-100: #fceecb;
+  --color-secondary-200: #f8e2a1;
+  --color-secondary-300: #f2cc67;
+  --color-secondary-400: #e6b93e;
+  --color-secondary-500: #b58900; /* main */
+  --color-secondary-600: #946f00;
+  --color-secondary-700: #735600;
+  --color-secondary-800: #4d3800;
+  --color-secondary-900: #2e2200;
+  --color-secondary-950: #1a1200;
 
   /* Neutral Colors */
   --color-neutrals-white: #ffffff;

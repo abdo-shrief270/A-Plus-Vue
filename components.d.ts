@@ -15,6 +15,7 @@ declare module 'vue' {
     APhone: typeof import('./src/components/common/APhone.vue')['default']
     ASelect: typeof import('./src/components/common/ASelect.vue')['default']
     Avatar: typeof import('primevue/avatar')['default']
+    Badge: typeof import('primevue/badge')['default']
     BBreadcrumb: typeof import('./src/components/common/BBreadcrumb.vue')['default']
     BDialog: typeof import('./src/components/common/BDialog.vue')['default']
     BDrawer: typeof import('./src/components/common/BDrawer.vue')['default']

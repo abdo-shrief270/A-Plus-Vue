@@ -1,151 +1,157 @@
 <template>
-  <div
-    class="flex flex-col lg:flex-row justify-center items-center py-12 px-4 container mx-auto gap-2"
-    role="region"
-    aria-label="مميزات التطبيق"
-  >
-    <!-- Left Content: Feature Cards -->
-    <div class="w-full lg:w-2/3">
-      <h2
-        class="text-4xl font-bold text-right mb-8 text-primary-800 dark:text-primary-200 tracking-tight"
-      >
-        مميزاتنا
-      </h2>
+  <div class="relative py-16 lg:py-20" role="section" aria-label="إحصائيات المنصة">
+    <!-- Background decorative elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
-        class="grid gap-6 bg-gradient-to-br from-primary-50 to-secondary-100 dark:from-primary-950 dark:to-secondary-900 rounded-3xl shadow-xl p-8 transition-all duration-500 hover:shadow-2xl scrollbar-hide"
-      >
-        <TransitionGroup name="list" tag="div" class="grid gap-6">
-          <div
-            v-for="(item, index) in items"
-            :key="index"
-            class="bg-neutrals-white dark:bg-secondary-900 rounded-2xl shadow-md transition-all duration-300 transform overflow-hidden"
-            role="article"
-            :aria-labelledby="`feature-title-${index}`"
-          >
-            <div class="p-6 flex items-start gap-5 rtl">
-              <div class="flex-shrink-0">
-                <div
-                  :class="[
-                    item.bgColor,
-                    'rounded-full p-4 flex items-center justify-center transition-transform duration-300',
-                  ]"
-                  :aria-hidden="true"
-                >
-                  <i :class="[item.iconClass, 'text-neutrals-white text-2xl']"></i>
-                </div>
-              </div>
-              <div class="flex-grow">
-                <h3
-                  :id="`feature-title-${index}`"
-                  class="text-2xl font-semibold mb-3 text-secondary-900 dark:text-neutrals-100"
-                >
-                  {{ item.title }}
-                </h3>
-                <p class="text-secondary-700 dark:text-secondary-300 leading-relaxed">
-                  {{ item.description }}
-                </p>
-                <div v-if="item.stats" class="mt-4 flex flex-wrap gap-4 text-sm">
-                  <span
-                    v-for="(stat, statIndex) in item.stats"
-                    :key="statIndex"
-                    class="flex items-center gap-2 bg-neutrals-200 dark:bg-secondary-800 rounded-full px-3 py-1"
-                  >
-                    <i :class="[stat.icon, 'text-primary-600 dark:text-primary-400']"></i>
-                    <span class="font-medium">{{ stat.value }}</span>
-                    <div
-                      class="h-1 w-12 bg-neutrals-300 dark:bg-secondary-700 rounded-full overflow-hidden"
-                      :aria-hidden="true"
-                    >
-                      <div
-                        class="h-full bg-primary-500 dark:bg-primary-400 transition-all duration-1000"
-                        :style="{ width: stat.progress + '%' }"
-                      ></div>
-                    </div>
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              v-if="item.actions"
-              class="bg-neutrals-100 dark:bg-secondary-950 px-6 py-4 text-right border-t border-neutrals-200 dark:border-secondary-800"
-            >
-              <button
-                class="text-primary-700 hover:text-primary-900 dark:text-primary-300 dark:hover:text-primary-100 font-semibold transition-colors duration-200 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg px-4 py-2"
-                @click="handleAction(item.actions.primary)"
-                :aria-label="`تنفيذ ${item.actions.primary}`"
-              >
-                {{ item.actions.primary }}
-              </button>
-            </div>
-          </div>
-        </TransitionGroup>
-      </div>
+        class="absolute top-10 left-10 w-32 h-32 bg-primary-100 dark:bg-primary-900 rounded-full opacity-20 blur-xl"
+      ></div>
+      <div
+        class="absolute bottom-10 right-10 w-24 h-24 bg-success-100 dark:bg-success-900 rounded-full opacity-20 blur-xl"
+      ></div>
     </div>
 
-    <!-- Right Content: Character -->
-    <div
-      class="w-full lg:w-1/3 flex items-center justify-center relative"
-      role="complementary"
-      aria-label="شخصية تفاعلية"
-    >
-      <div
-        class="relative transition-transform duration-500 transform hover:scale-105 focus-within:scale-105 outline-none"
-        :class="{ 'bounce-animation': isAnimating }"
-        @mouseenter="startAnimation"
-        @focusin="startAnimation"
-        @click="toggleSpeechBubble"
-        tabindex="0"
-        role="button"
-        aria-label="تفاعل مع الشخصية"
-      >
-        <!-- Speech Bubble -->
+    <!-- Main Content Container -->
+    <div class="relative container mx-auto px-4 lg:px-8 z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <!-- Statistic Item 1: Questions -->
         <div
-          v-if="showSpeechBubble"
-          class="absolute -top-16 -right-4 z-10 bg-primary-600 dark:bg-primary-800 text-neutrals-white p-4 rounded-xl shadow-lg max-w-sm transition-opacity duration-300"
-          :class="{ 'pop-in': showSpeechBubble }"
-          role="dialog"
-          aria-live="polite"
+          class="text-center animate-fade-in"
+          style="animation-delay: 0ms"
+          role="article"
+          aria-labelledby="stat-1-title"
         >
-          <div class="text-right font-semibold text-sm">
-            {{ speechBubbleText }}
+          <!-- Icon Container -->
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-success-400 to-success-600 rounded-full flex items-center justify-center shadow-lg animate-pulse-subtle"
+              >
+                <i class="pi pi-briefcase text-neutrals-white text-2xl"></i>
+              </div>
+              <!-- Floating indicator -->
+              <div
+                class="absolute -top-2 -right-2 w-6 h-6 bg-warning-500 rounded-full animate-bounce-subtle"
+              ></div>
+            </div>
           </div>
-          <div
-            class="absolute bottom-0 right-10 transform translate-y-1/2 rotate-45 w-4 h-4 bg-primary-600 dark:bg-primary-800"
-          ></div>
-        </div>
 
-        <!-- Character Circle -->
-        <div
-          class="relative p-1.5 rounded-full bg-gradient-to-r from-success-400 via-warning-400 to-error-400"
-        >
-          <div
-            class="bg-gradient-to-br from-success-200 to-warning-200 dark:from-success-900 dark:to-warning-900 p-10 rounded-full shadow-2xl relative overflow-hidden"
+          <!-- Number -->
+          <div class="mb-4">
+            <span
+              class="text-4xl lg:text-5xl font-bold text-primary-800 dark:text-primary-100 countup"
+              :data-target="4000"
+              ref="counter1"
+            >
+              {{ animatedNumbers.questions }}
+            </span>
+            <span class="text-2xl lg:text-3xl font-bold text-success-600 dark:text-success-400 mr-2"
+              >+</span
+            >
+          </div>
+
+          <!-- Description -->
+          <p
+            id="stat-1-title"
+            class="text-secondary-700 dark:text-secondary-200 text-sm lg:text-base leading-relaxed max-w-xs mx-auto"
           >
-            <div
-              class="absolute inset-0 bg-neutrals-white dark:bg-neutrals-950 opacity-30 rounded-full shine-effect"
-            ></div>
-            <img
-              :src="images.HomeAbout"
-              alt="شخصية تعليمية"
-              class="w-40 h-40 object-cover rounded-full border-4 border-neutrals-white dark:border-neutrals-950 shadow-inner"
-              loading="lazy"
-              @error="handleImageError"
-            />
-          </div>
+            بنك أسئلة ضخم فيه أكثر من
+            <span class="font-semibold text-primary-700 dark:text-primary-300">4000</span>
+            سؤال يضمنلك استعداد كامل
+          </p>
         </div>
 
-        <!-- Floating Badges -->
+        <!-- Statistic Item 2: Videos -->
         <div
-          class="absolute -top-8 -left-8 bg-error-600 dark:bg-error-500 text-neutrals-white rounded-full px-4 py-1.5 text-xs font-bold shadow-md scale-animation"
-          aria-hidden="true"
+          class="text-center animate-fade-in"
+          style="animation-delay: 200ms"
+          role="article"
+          aria-labelledby="stat-2-title"
         >
-          جديد!
+          <!-- Icon Container -->
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-success-400 to-success-600 rounded-full flex items-center justify-center shadow-lg animate-pulse-subtle"
+              >
+                <i class="pi pi-play text-neutrals-white text-2xl"></i>
+              </div>
+              <!-- Floating indicator -->
+              <div
+                class="absolute -top-2 -right-2 w-6 h-6 bg-error-500 rounded-full animate-bounce-subtle"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Number -->
+          <div class="mb-4">
+            <span
+              class="text-4xl lg:text-5xl font-bold text-primary-800 dark:text-primary-100 countup"
+              :data-target="300"
+              ref="counter2"
+            >
+              {{ animatedNumbers.videos }}
+            </span>
+            <span class="text-2xl lg:text-3xl font-bold text-success-600 dark:text-success-400 mr-2"
+              >+</span
+            >
+          </div>
+
+          <!-- Description -->
+          <p
+            id="stat-2-title"
+            class="text-secondary-700 dark:text-secondary-200 text-sm lg:text-base leading-relaxed max-w-xs mx-auto"
+          >
+            من العلوم للمهارات العملية..
+            <span class="font-semibold text-primary-700 dark:text-primary-300">محتوى متنوع</span>
+            يغطي كل الأجزاء
+          </p>
         </div>
+
+        <!-- Statistic Item 3: Students -->
         <div
-          class="absolute -bottom-6 -right-6 bg-success-600 dark:bg-success-500 text-neutrals-white rounded-full px-4 py-1.5 text-xs font-bold shadow-md delayed-scale-animation"
-          aria-hidden="true"
+          class="text-center animate-fade-in"
+          style="animation-delay: 400ms"
+          role="article"
+          aria-labelledby="stat-3-title"
         >
-          حصري
+          <!-- Icon Container -->
+          <div class="flex justify-center mb-6">
+            <div class="relative">
+              <div
+                class="w-16 h-16 bg-gradient-to-br from-success-400 to-success-600 rounded-full flex items-center justify-center shadow-lg animate-pulse-subtle"
+              >
+                <i class="pi pi-users text-neutrals-white text-2xl"></i>
+              </div>
+              <!-- Floating indicator -->
+              <div
+                class="absolute -top-2 -right-2 w-6 h-6 bg-primary-500 rounded-full animate-bounce-subtle"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Number -->
+          <div class="mb-4">
+            <span
+              class="text-4xl lg:text-5xl font-bold text-primary-800 dark:text-primary-100 countup"
+              :data-target="2000"
+              ref="counter3"
+            >
+              {{ animatedNumbers.students }}
+            </span>
+            <span class="text-2xl lg:text-3xl font-bold text-success-600 dark:text-success-400 mr-2"
+              >+</span
+            >
+          </div>
+
+          <!-- Description -->
+          <p
+            id="stat-3-title"
+            class="text-secondary-700 dark:text-secondary-200 text-sm lg:text-base leading-relaxed max-w-xs mx-auto"
+          >
+            انضم لأكثر من
+            <span class="font-semibold text-primary-700 dark:text-primary-300">2000 طالب</span>
+            يذاكروا ويستعدوا معنا للنجاح
+          </p>
         </div>
       </div>
     </div>
@@ -153,203 +159,178 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
-import useImages from '@/helpers/images.helper'
+import { ref, onMounted, onUnmounted } from 'vue'
 
-const images = useImages()
-const characterImage = ref('/api/placeholder/400/400')
-const showSpeechBubble = ref(false)
-const isAnimating = ref(false)
-
-// Dynamic speech bubble text
-const speechBubbleOptions = ['تبغى أقولك ليش نتفوق؟', 'جاهز تكتشف مميزاتنا؟', 'خلينا نوصلك للتميز!']
-const speechBubbleText = computed(() => {
-  return speechBubbleOptions[Math.floor(Math.random() * speechBubbleOptions.length)]
+// Animated numbers state
+const animatedNumbers = ref({
+  questions: 0,
+  videos: 0,
+  students: 0,
 })
 
-// Enhanced items with progress indicators
-const items = [
-  {
-    title: 'أسئلة متنوعة واختبارات محاكية لزيادة تحضيرك!',
-    description: 'استمتع بمجموعة واسعة من أسئلة الكمي واللفظي مع شروحات تفصيلية لكل إجابة.',
-    iconClass: 'pi pi-check-circle',
-    bgColor: 'bg-error-600 dark:bg-error-500',
-    stats: [
-      { icon: 'pi pi-file', value: '+500 سؤال', progress: 85 },
-      { icon: 'pi pi-users', value: '+10,000 طالب', progress: 90 },
-    ],
-    actions: {
-      primary: 'استعرض الأسئلة',
-    },
-  },
-  {
-    title: 'خطة مذاكرة مخصصة تناسب مستواك!',
-    description: 'احصل على خطة دراسية مصممة خصيصًا لتحقيق تقدم يومي وأهدافك.',
-    iconClass: 'pi pi-calendar',
-    bgColor: 'bg-primary-600 dark:bg-primary-500',
-    stats: [
-      { icon: 'pi pi-calendar', value: '60 يوم', progress: 75 },
-      { icon: 'pi pi-chart-line', value: 'تقدم +40%', progress: 80 },
-    ],
-    actions: {
-      primary: 'أنشئ خطتك',
-    },
-  },
-  {
-    title: 'مراجعة شاملة لكل نماذج الاختبار!',
-    description: 'كل ما تحتاجه للمراجعة في مكان واحد مع تلخيصات دقيقة ومركزة.',
-    iconClass: 'pi pi-rocket',
-    bgColor: 'bg-warning-600 dark:bg-warning-500',
-    stats: [
-      { icon: 'pi pi-book', value: '12 مادة', progress: 95 },
-      { icon: 'pi pi-star', value: 'تقييم 4.9/5', progress: 92 },
-    ],
-    actions: {
-      primary: 'ابدأ المراجعة',
-    },
-  },
-  {
-    title: 'نماذج اختبارات متوقعة للتدريب!',
-    description: 'تدرب على نماذج اختبارات مشابهة للاختبارات الرسمية ومحدثة باستمرار.',
-    iconClass: 'pi pi-book',
-    bgColor: 'bg-success-600 dark:bg-success-500',
-    stats: [
-      { icon: 'pi pi-copy', value: '30 نموذج', progress: 88 },
-      { icon: 'pi pi-clock', value: 'محدثة دوريًا', progress: 90 },
-    ],
-    actions: {
-      primary: 'جرب النماذج',
-    },
-  },
-]
+// Animation controls
+const isVisible = ref(false)
+const observer = ref(null)
 
-// Image handling
-const tryLoadImage = async () => {
-  try {
-    if (images?.HomeAbout) {
-      characterImage.value = images.HomeAbout
+// Counter animation function
+const animateCounter = (start, end, duration, callback) => {
+  const startTime = performance.now()
+  const difference = end - start
+
+  const step = (currentTime) => {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+
+    // Easing function for smooth animation
+    const easeOutCubic = 1 - Math.pow(1 - progress, 3)
+    const current = Math.floor(start + difference * easeOutCubic)
+
+    callback(current)
+
+    if (progress < 1) {
+      requestAnimationFrame(step)
     }
-  } catch (error) {
-    console.error('Failed to load image, using placeholder:', error)
   }
+
+  requestAnimationFrame(step)
 }
 
-const handleImageError = () => {
-  characterImage.value = '/api/placeholder/400/400'
+// Start all animations
+const startAnimations = () => {
+  if (isVisible.value) return
+
+  isVisible.value = true
+
+  // Animate questions counter
+  animateCounter(0, 4000, 2000, (value) => {
+    animatedNumbers.value.questions = value
+  })
+
+  // Animate videos counter with delay
+  setTimeout(() => {
+    animateCounter(0, 300, 1500, (value) => {
+      animatedNumbers.value.videos = value
+    })
+  }, 200)
+
+  // Animate students counter with delay
+  setTimeout(() => {
+    animateCounter(0, 2000, 1800, (value) => {
+      animatedNumbers.value.students = value
+    })
+  }, 400)
 }
 
-// Animation and interaction
-const startAnimation = () => {
-  if (!isAnimating.value) {
-    isAnimating.value = true
-    setTimeout(() => {
-      isAnimating.value = false
-    }, 1200)
-  }
-}
-
-const toggleSpeechBubble = () => {
-  showSpeechBubble.value = !showSpeechBubble.value
-}
-
-const handleAction = (action) => {
-  console.log(`Action triggered: ${action}`)
+// Intersection Observer setup
+const setupIntersectionObserver = () => {
+  observer.value = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !isVisible.value) {
+          startAnimations()
+        }
+      })
+    },
+    {
+      threshold: 0.3,
+      rootMargin: '0px 0px -100px 0px',
+    },
+  )
 }
 
 onMounted(() => {
-  tryLoadImage()
-  setTimeout(() => {
-    showSpeechBubble.value = true
-  }, 1200)
+  setupIntersectionObserver()
+
+  // Observe the main container
+  const mainElement = document.querySelector('[role="section"][aria-label="إحصائيات المنصة"]')
+  if (mainElement && observer.value) {
+    observer.value.observe(mainElement)
+  }
+})
+
+onUnmounted(() => {
+  if (observer.value) {
+    observer.value.disconnect()
+  }
 })
 </script>
 
 <style scoped>
+/* RTL support */
 .rtl {
   direction: rtl;
   text-align: right;
-  font-family: var(--font-family-sans);
 }
 
-/* Smooth list transitions */
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.6s ease;
-}
-.list-enter-from,
-.list-leave-to {
+/* Fade-in animation */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
   opacity: 0;
-  transform: translateX(40px);
 }
 
-/* Bounce animation for character */
-.bounce-animation {
-  animation: bounce 1.2s ease;
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@keyframes bounce {
+/* Subtle pulse animation for icons */
+.animate-pulse-subtle {
+  animation: pulseSubtle 2s ease-in-out infinite;
+}
+
+@keyframes pulseSubtle {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 8px 12px -2px rgba(0, 0, 0, 0.15),
+      0 4px 8px -2px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Subtle bounce animation for indicators */
+.animate-bounce-subtle {
+  animation: bounceSubtle 2s ease-in-out infinite;
+}
+
+@keyframes bounceSubtle {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translateY(-4px);
   }
 }
 
-/* Speech bubble pop-in effect */
-.pop-in {
-  animation: popIn 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+/* Number counter styling */
+.countup {
+  background: linear-gradient(135deg, #1e40af, #059669);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-variant-numeric: tabular-nums;
 }
 
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.4);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Badge animations */
-.scale-animation {
-  animation: scale 2.5s infinite alternate ease-in-out;
-}
-
-.delayed-scale-animation {
-  animation: scale 2.5s infinite alternate ease-in-out;
-  animation-delay: 1.2s;
-}
-
-@keyframes scale {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.15);
-  }
-}
-
-/* Shine effect for character */
-.shine-effect {
-  animation: shine 4s infinite linear;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 100%;
-}
-
-@keyframes shine {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .countup {
+    background: linear-gradient(135deg, #60a5fa, #34d399);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
@@ -359,20 +340,40 @@ onMounted(() => {
     font-size: var(--font-size-3xl);
     line-height: var(--line-height-3xl);
   }
-  .w-40 {
-    width: 8rem;
-    height: 8rem;
-  }
-  .p-10 {
-    padding: 1.5rem;
-  }
-  .max-w-sm {
-    max-width: 16rem;
-  }
+
   .text-2xl {
     font-size: var(--font-size-xl);
     line-height: var(--line-height-xl);
   }
+
+  .w-16 {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .text-2xl.pi {
+    font-size: 1.25rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-pulse-subtle,
+  .animate-bounce-subtle {
+    animation: none;
+  }
+
+  .animate-fade-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Enhanced focus states */
+[role='article']:focus-within {
+  outline: 2px solid #059669;
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 </style>
-```

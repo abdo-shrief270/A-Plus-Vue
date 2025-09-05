@@ -5,11 +5,11 @@
   <!-- start home about us -->
   <home-about />
 
-  <!-- start testimonials -->
-  <testimonials />
-
   <!-- start home app -->
   <home-app />
+
+  <!-- start testimonials -->
+  <testimonials />
 </template>
 
 <script setup>
