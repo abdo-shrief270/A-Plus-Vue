@@ -32,7 +32,7 @@
                 <h4 class="text-lg font-bold text-secondary-900 dark:text-neutrals-100">
                   فوزة عبدالله
                 </h4>
-                <div class="flex gap-1">
+                <div class="flex items-center gap-1">
                   <span class="text-2xl font-bold text-warning-500">4.1</span>
                   <div class="flex">
                     <i class="pi pi-star-fill text-warning-500 text-sm"></i>
@@ -65,7 +65,7 @@
                 <h4 class="text-lg font-bold text-secondary-900 dark:text-neutrals-100">
                   سعود عبدالعزيز
                 </h4>
-                <div class="flex gap-1">
+                <div class="flex items-center gap-1">
                   <span class="text-2xl font-bold text-warning-500">4.4</span>
                   <div class="flex">
                     <i class="pi pi-star-fill text-warning-500 text-sm"></i>
@@ -97,7 +97,7 @@
                 <h4 class="text-lg font-bold text-secondary-900 dark:text-neutrals-100">
                   فهد سليمان
                 </h4>
-                <div class="flex gap-1">
+                <div class="flex items-center gap-1">
                   <span class="text-2xl font-bold text-warning-500">4.2</span>
                   <div class="flex">
                     <i class="pi pi-star-fill text-warning-500 text-sm"></i>
@@ -129,7 +129,7 @@
                 <h4 class="text-lg font-bold text-secondary-900 dark:text-neutrals-100">
                   يمني عبدالله
                 </h4>
-                <div class="flex gap-1">
+                <div class="flex items-center gap-1">
                   <span class="text-2xl font-bold text-warning-500">4.7</span>
                   <div class="flex">
                     <i class="pi pi-star-fill text-warning-500 text-sm"></i>

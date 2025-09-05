@@ -9,8 +9,8 @@ export default {
       beforeEnter: parentOnlyGuard,
     },
     {
-      path: '/courses',
-      name: 'courses',
+      path: '/dashboard-courses',
+      name: 'dashboard-courses',
       component: () => import('@/views/Parent/CoursesPage.vue'),
       beforeEnter: parentOnlyGuard,
     },

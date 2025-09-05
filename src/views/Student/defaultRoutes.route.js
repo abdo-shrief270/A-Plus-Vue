@@ -46,5 +46,10 @@ export default {
       component: () => import('./Profile/ProfilePage.vue'),
       beforeEnter: authGuard,
     },
+    {
+      path: '/courses',
+      name: 'courses',
+      component: () => import('./Courses/CoursesPage.vue'),
+    },
   ],
 }
