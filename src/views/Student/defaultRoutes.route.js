@@ -28,9 +28,9 @@ export default {
       },
     },
     {
-      path: '/questions',
-      name: 'questions',
-      component: () => import('./QuestionsPage.vue'),
+      path: '/exams',
+      name: 'exams',
+      component: () => import('./Exams/AllExamsPage.vue'),
     },
     {
       path: '/contact',
@@ -45,21 +45,6 @@ export default {
       name: 'profile',
       component: () => import('./Profile/ProfilePage.vue'),
       beforeEnter: authGuard,
-    },
-    {
-      path: '/question-details/:id',
-      name: 'question-details',
-      component: () => import('./QusetionDetailsPage.vue'),
-      props: (route) => ({
-        categoryId: route.params.id,
-        sectionId: route.query.section,
-        sectionName: route.query.sectionName,
-        categoryName: route.query.categoryName,
-        type: route.query.type,
-      }),
-      meta: {
-        title: 'تفاصيل الأسئلة',
-      },
     },
   ],
 }

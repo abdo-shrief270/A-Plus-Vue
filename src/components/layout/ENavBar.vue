@@ -1,33 +1,42 @@
 <template>
   <nav
-    class="bg-gradient-to-r from-primary-50 to-secondary-100 dark:from-primary-950 dark:to-secondary-900 border-b border-primary-200 dark:border-primary-800 sticky top-0 w-full z-30 shadow-lg transition-all duration-300 animate-fade-in"
+    class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 w-full z-30 shadow-md"
     role="navigation"
     aria-label="القائمة الرئيسية"
   >
-    <div class="container mx-auto flex items-center justify-between px-4 py-4">
-      <!-- Logo -->
-      <router-link to="/" class="flex items-center gap-2" aria-label="الصفحة الرئيسية">
-        <div class="relative p-1 rounded-full bg-gradient-to-r from-success-400 to-primary-400">
-          <img
-            :src="currentLogo"
-            alt="شعار المنصة"
-            class="h-10 w-10 object-contain"
-            loading="lazy"
-            @error="handleImageError"
+    <div class="container mx-auto flex items-center justify-between px-6 py-3">
+      <!-- User Menu / Sign In -->
+      <div class="flex items-center">
+        <div v-if="!isLogin">
+          <Button
+            label="تسجيل الدخول"
+            icon="pi pi-user"
+            class="bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium py-2 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            @click="$router.push('/sign-in')"
+            aria-label="تسجيل الدخول"
           />
-          <div
-            class="absolute inset-0 bg-neutrals-white dark:bg-neutrals-950 opacity-20 rounded-full shine-effect"
-          ></div>
         </div>
-        <span class="text-2xl font-bold text-primary-800 dark:text-primary-100">
-          {{ appName || 'ESY' }}
-        </span>
-      </router-link>
+
+        <div v-else class="relative">
+          <Button
+            type="button"
+            @click="toggle"
+            class="flex items-center gap-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 font-medium py-2 px-3 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            aria-haspopup="true"
+            aria-controls="overlay_menu"
+          >
+            <i class="pi pi-user text-sm"></i>
+            <span class="text-sm">حساب</span>
+            <i class="pi pi-chevron-down text-xs"></i>
+          </Button>
+          <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+        </div>
+      </div>
 
       <!-- Mobile Menu Toggle -->
       <button
         @click="toggleMenu"
-        class="md:hidden text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
+        class="md:hidden text-gray-600 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-lg p-2"
         aria-label="تبديل القائمة"
         :aria-expanded="isMenuOpen"
       >
@@ -35,7 +44,7 @@
           :class="[
             'pi',
             isMenuOpen ? 'pi-times' : 'pi-bars',
-            'text-2xl transition-transform duration-300',
+            'text-xl transition-transform duration-300',
           ]"
         ></i>
       </button>
@@ -43,9 +52,9 @@
       <!-- Menu Items -->
       <div
         :class="[
-          'md:flex md:flex-row md:items-center md:gap-6',
+          'md:flex md:flex-row md:items-center md:gap-8',
           isMenuOpen
-            ? 'flex flex-col absolute top-full left-0 w-full bg-neutrals-white dark:bg-secondary-900 shadow-lg md:shadow-none md:static md:bg-transparent md:dark:bg-transparent p-4 md:p-0'
+            ? 'flex flex-col absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-lg md:shadow-none md:static md:bg-transparent md:dark:bg-transparent p-4 md:p-0'
             : 'hidden',
           'transition-all duration-300',
         ]"
@@ -54,89 +63,65 @@
           v-for="(item, index) in validMenuItems"
           :key="item.id"
           :to="item.route"
-          class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 hover:text-primary-300 dark:hover:text-primary-300 font-semibold p-2 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500"
+          class="flex items-center gap-3 text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium p-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500"
           :class="[
-            $route.path === item.route
-              ? 'bg-primary-500 text-white dark:bg-primary-400 dark:text-neutrals-100'
-              : '',
+            $route.path === item.route ? 'text-primary-500 dark:text-primary-400' : '',
             isMenuOpen ? 'animate-slide-in' : '',
           ]"
           :style="{ animationDelay: `${index * 100}ms` }"
           :aria-current="$route.path === item.route ? 'page' : null"
         >
-          <img
-            :src="item.icon"
-            :alt="`${item.label} أيقونة`"
-            class="w-6 h-6 object-contain rounded-full shadow-sm transition-transform duration-300 hover:scale-110"
-            loading="lazy"
-            @error="handleIconError($event, item)"
-          />
+          <i :class="item.icon" class="text-lg"></i>
           <span>{{ item.label }}</span>
         </router-link>
       </div>
 
-      <!-- Sign In Button -->
-      <div v-if="!isLogin">
-        <Button
-          label="الدخول"
-          class="bg-gradient-to-r from-primary-500 to-success-500 hover:from-primary-600 hover:to-success-600 dark:from-primary-400 dark:to-success-400 dark:hover:from-primary-500 dark:hover:to-success-500 text-neutrals-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          @click="$router.push('/sign-in')"
-          aria-label="تسجيل الدخول"
-        />
-      </div>
-
-      <div v-else>
-        <Button
-          type="button"
-          @click="toggle"
-          rounded
-          aria-haspopup="true"
-          aria-controls="overlay_menu"
-          class="flex items-center gap-2 text-secondary-700 dark:text-secondary-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-2"
-        >
-          <img :src="currentLogo" alt="" class="w-8 h-8 rounded-full" />
-        </Button>
-        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-      </div>
+      <!-- Logo -->
+      <router-link to="/" class="flex items-center gap-2" aria-label="الصفحة الرئيسية">
+        <img :src="images.logo" alt="" class="h-12 w-12" />
+      </router-link>
     </div>
   </nav>
 </template>
 
 <script setup>
 import { onMounted, ref, computed } from 'vue'
-import useImages from '@/helpers/images.helper'
 import { useAuthStore } from '@/stores/Auth/auth.store'
 import { useRouter } from 'vue-router'
+import useImages from '@/helpers/images.helper'
 
+const images = useImages()
 const router = useRouter()
 const authStore = computed(() => useAuthStore())
 const isLogin = computed(() => authStore.value?.isLogin)
-const images = useImages()
 
-// Reactive logo state
-const currentLogo = ref('https://fakeimg.pl/100x100/4ecf6a/ffffff?text=شعار&font=noto')
 const isMenuOpen = ref(false)
-const appName = ref('ESY')
 
-// Router links as object with colorful FakeImg.pl icons
+// Updated menu items with icons similar to the image
 const menuItemsObj = ref({
   plan: {
     id: 'plan',
     route: '/plan',
     label: 'خطتي',
-    icon: 'https://fakeimg.pl/50x50/ff6b6b/ffffff?text=خطة&font=noto', // Red for planning
+    icon: 'pi pi-calendar', // Calendar icon for planning
   },
   questions: {
-    id: 'questions',
-    route: '/questions',
+    id: 'exams',
+    route: '/exams',
     label: 'بنك الأسئلة',
-    icon: 'https://fakeimg.pl/50x50/4b89ff/ffffff?text=أسئلة&font=noto', // Blue for questions
+    icon: 'pi pi-question-circle', // Question icon for question bank
   },
-  models: {
-    id: 'models',
-    route: '/models',
-    label: 'نماذج',
-    icon: 'https://fakeimg.pl/50x50/2ecc71/ffffff?text=نماذج&font=noto', // Green for models
+  courses: {
+    id: 'courses',
+    route: '/courses',
+    label: 'الدورات',
+    icon: 'pi pi-book', // Book icon for courses
+  },
+  contestants: {
+    id: 'contestants',
+    route: '/contestants',
+    label: 'المتصدرين',
+    icon: 'pi pi-trophy', // Trophy icon for top performers
   },
 })
 
@@ -151,43 +136,6 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
 }
 
-// Fixed image error handler
-const handleImageError = () => {
-  console.warn('Logo failed to load, using fallback')
-  currentLogo.value = 'https://fakeimg.pl/100x100/cccccc/ffffff?text=بديل&font=noto'
-}
-
-// Fixed icon error handler with proper safety checks
-const handleIconError = (event, item = null) => {
-  console.warn('Icon failed to load for item:', item?.id || 'unknown')
-
-  try {
-    // Check if we have a valid item object
-    if (!item || typeof item !== 'object' || !item.id) {
-      console.warn('handleIconError: Invalid item provided')
-      return
-    }
-
-    // Check if the item exists in our menuItemsObj
-    const menuItemKey = Object.keys(menuItemsObj.value).find(
-      (key) => menuItemsObj.value[key].id === item.id,
-    )
-
-    if (menuItemKey && menuItemsObj.value[menuItemKey]) {
-      // Safely update the icon
-      menuItemsObj.value[menuItemKey].icon =
-        'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
-    } else {
-      // If item not found in menuItemsObj, update the item directly if possible
-      if ('icon' in item) {
-        item.icon = 'https://fakeimg.pl/50x50/cccccc/ffffff?text=بديل&font=noto'
-      }
-    }
-  } catch (error) {
-    console.error('Error in handleIconError:', error)
-  }
-}
-
 // Menu items for user dropdown
 const menu = ref()
 const items = ref([
@@ -197,6 +145,9 @@ const items = ref([
     command: () => {
       router.push('/profile')
     },
+  },
+  {
+    separator: true,
   },
   {
     label: 'تسجيل الخروج',
@@ -235,22 +186,6 @@ onMounted(() => {
   font-family: var(--font-family-sans);
 }
 
-/* Fade-in animation for navbar */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* Slide-in animation for mobile menu items */
 .animate-slide-in {
   animation: slideIn 0.3s ease-out forwards;
@@ -267,36 +202,23 @@ onMounted(() => {
   }
 }
 
-/* Shine effect for logo */
-.shine-effect {
-  animation: shine 4s infinite linear;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.7) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 200% 100%;
-}
-
-@keyframes shine {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
 /* Responsive adjustments */
 @media (max-width: 768px) {
-  .text-2xl {
-    font-size: var(--font-size-xl);
-    line-height: var(--line-height-xl);
-  }
   .container {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+/* Custom button styling to match the design */
+.p-button {
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+/* Menu item hover effects */
+a:hover i {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }
 </style>
